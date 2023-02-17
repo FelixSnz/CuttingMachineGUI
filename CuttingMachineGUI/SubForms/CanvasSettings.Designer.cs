@@ -1,6 +1,6 @@
 ﻿namespace CuttingMachineGUI.SubForms
 {
-    partial class Form1
+    partial class CanvasSettings
     {
         /// <summary>
         /// Required designer variable.
