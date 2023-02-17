@@ -10,6 +10,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Windows.Media.Media3D;
+using System.Windows;
+using Size = System.Drawing.Size;
+using Point = System.Drawing.Point;
+using MessageBox = System.Windows.Forms.MessageBox;
+
+
 
 namespace CuttingMachineGUI.Forms
 {
@@ -28,6 +34,7 @@ namespace CuttingMachineGUI.Forms
         private int FabricHeight = Convert.ToInt32(ConfigurationManager.AppSettings["FabricHeight"]);
         private int DistanceBetweenCuts = Convert.ToInt32(ConfigurationManager.AppSettings["DistanceBetweenCuts"]);
         private int CutsMargin = Convert.ToInt32(ConfigurationManager.AppSettings["CutsMargin"]);
+        private string Units = ConfigurationManager.AppSettings["Units"];
 
 
         List<Rectangle> cutRects = new List<Rectangle>();
@@ -133,7 +140,7 @@ namespace CuttingMachineGUI.Forms
         private void SingleCutBtn_Click(object sender, EventArgs e)
         {
 
-            SubForms.NewSingleCut newForm = new SubForms.NewSingleCut();
+            SubForms.NewSingleCut newForm = new SubForms.NewSingleCut("Agregar corte", Units, false);
 
             newForm.StartPosition = FormStartPosition.CenterScreen;
 
@@ -205,13 +212,10 @@ namespace CuttingMachineGUI.Forms
 
         private void FabricPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("mouse down");
             foreach (Rectangle cutRect in cutRects)
             {
                 if (cutRect.Contains(e.Location))
                 {
-                    Console.WriteLine("showing menu strip");
-                    //figureMenuStrip.
                     selectedRect = cutRect;
                     offset = new Point(e.Location.X - cutRect.X, e.Location.Y - cutRect.Y);
                     break;
@@ -236,7 +240,7 @@ namespace CuttingMachineGUI.Forms
                 EraseDrawnRect(selectedRect);
 
                 cutRects[index] = new Rectangle(
-                    selectedRect.X + dx - offset.X, 
+                    selectedRect.X + dx - offset.X,
                     selectedRect.Y + dy - offset.Y,
                     selectedRect.Width,
                     selectedRect.Height
@@ -245,18 +249,17 @@ namespace CuttingMachineGUI.Forms
 
                 selectedRect = cutRects[index];
                 FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
-                
+
             }
 
         }
 
         private void EraseDrawnRect(Rectangle Rect)
         {
-            SolidBrush whiteBrush = new SolidBrush(RGBColors.blackblue);
-            Pen ligthBluePen = new Pen(RGBColors.blackblue, 1);
+            SolidBrush eraser = new SolidBrush(RGBColors.blackblue);
 
-            myCanvas.FillRectangle(whiteBrush, Rect.X, Rect.Y, Rect.Width, Rect.Height);
-            myCanvas.DrawRectangle(ligthBluePen, Rect.X, Rect.Y, Rect.Width, Rect.Width);
+            myCanvas.FillRectangle(eraser, Rect.X, Rect.Y, Rect.Width + 1, Rect.Height + 1);
+
 
         }
 
@@ -287,6 +290,52 @@ namespace CuttingMachineGUI.Forms
         {
             EraseDrawnRect(lastSelectedRect);
             cutRects.Remove(lastSelectedRect);
+        }
+
+        private void redimensionarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            SubForms.NewSingleCut newCutForm = new SubForms.NewSingleCut("Redimensionar", Units, false);
+
+            newCutForm.StartPosition = FormStartPosition.CenterScreen;
+
+
+            if (newCutForm.ShowDialog() == DialogResult.OK)
+            {
+                Console.WriteLine("rdimesioning");
+                EraseDrawnRect(lastSelectedRect);
+                int index = cutRects.IndexOf(lastSelectedRect);
+
+                cutRects[index] = new Rectangle(
+                    lastSelectedRect.X,
+                    lastSelectedRect.Y,
+                    newCutForm.HorizontalDistance, //width
+                    newCutForm.VerticalDistance    //height
+                    );
+                FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
+
+            }
+
+            newCutForm.Close();
+
+        }
+
+        private void rotarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EraseDrawnRect(lastSelectedRect);
+
+            Rectangle rotatedRect = new Rectangle(
+                lastSelectedRect.Location,
+                new Size(
+                    lastSelectedRect.Height,
+                    lastSelectedRect.Width
+                    )
+                );
+
+            int index = cutRects.IndexOf(lastSelectedRect);
+            cutRects[index] = rotatedRect;
+            FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
+
         }
     }
 }

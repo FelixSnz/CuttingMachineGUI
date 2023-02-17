@@ -250,12 +250,14 @@
             this.rotarToolStripMenuItem.Name = "rotarToolStripMenuItem";
             this.rotarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.rotarToolStripMenuItem.Text = "rotar";
+            this.rotarToolStripMenuItem.Click += new System.EventHandler(this.rotarToolStripMenuItem_Click);
             // 
             // redimensionarToolStripMenuItem
             // 
             this.redimensionarToolStripMenuItem.Name = "redimensionarToolStripMenuItem";
             this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.redimensionarToolStripMenuItem.Text = "redimensionar";
+            this.redimensionarToolStripMenuItem.Click += new System.EventHandler(this.redimensionarToolStripMenuItem_Click);
             // 
             // eliminarToolStripMenuItem
             // 

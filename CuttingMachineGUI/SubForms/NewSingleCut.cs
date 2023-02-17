@@ -17,16 +17,23 @@ namespace CuttingMachineGUI.SubForms
         public int HorizontalDistance;
         public int VerticalAmount;
         public int HorizontalAmount;
-        public NewSingleCut()
+        public NewSingleCut(string Title, string units, bool MultiCut)
         {
             InitializeComponent();
 
-
+            TitleLabel.Text = Title;
+            UnitsLbl1.Text = units;
+            UnitsLbl2.Text = units;
             this.Text = string.Empty;
             this.ControlBox = false;
 
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+
+            if (MultiCut)
+            {
+                this.Size = new Size(this.Size.Width + 60, this.Size.Height);
+            }
         }
 
 
