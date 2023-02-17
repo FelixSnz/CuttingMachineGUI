@@ -43,6 +43,7 @@
             this.figureMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.rotarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redimensionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.BgPanel.SuspendLayout();
             this.figureMenuStrip.SuspendLayout();
@@ -239,21 +240,29 @@
             this.figureMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.figureMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rotarToolStripMenuItem,
-            this.redimensionarToolStripMenuItem});
+            this.redimensionarToolStripMenuItem,
+            this.eliminarToolStripMenuItem});
             this.figureMenuStrip.Name = "figureMenuStrip";
-            this.figureMenuStrip.Size = new System.Drawing.Size(174, 52);
+            this.figureMenuStrip.Size = new System.Drawing.Size(211, 104);
             // 
             // rotarToolStripMenuItem
             // 
             this.rotarToolStripMenuItem.Name = "rotarToolStripMenuItem";
-            this.rotarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.rotarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.rotarToolStripMenuItem.Text = "rotar";
             // 
             // redimensionarToolStripMenuItem
             // 
             this.redimensionarToolStripMenuItem.Name = "redimensionarToolStripMenuItem";
-            this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.redimensionarToolStripMenuItem.Text = "redimensionar";
+            // 
+            // eliminarToolStripMenuItem
+            // 
+            this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
+            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.eliminarToolStripMenuItem.Text = "eliminar";
+            this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
             // DesignMaker
             // 
@@ -289,5 +298,6 @@
         private System.Windows.Forms.ContextMenuStrip figureMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem rotarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redimensionarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
     }
 }

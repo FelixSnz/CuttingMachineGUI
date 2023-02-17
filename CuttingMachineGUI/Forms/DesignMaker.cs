@@ -18,8 +18,8 @@ namespace CuttingMachineGUI.Forms
 
         private Graphics myCanvas;
         private Rectangle selectedRect;
+        private Rectangle lastSelectedRect;
         private Point offset;
-
 
 
 
@@ -216,19 +216,12 @@ namespace CuttingMachineGUI.Forms
                     offset = new Point(e.Location.X - cutRect.X, e.Location.Y - cutRect.Y);
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("hiding menu strip");
 
-                    figureMenuStrip.ShowItemToolTips = false;
-                }
             }
         }
 
         private void FabricPanel_MouseMove(object sender, MouseEventArgs e)
         {
-
-
 
             if (selectedRect != Rectangle.Empty)
             {
@@ -239,15 +232,20 @@ namespace CuttingMachineGUI.Forms
 
                 int index = cutRects.IndexOf(selectedRect);
 
+
                 EraseDrawnRect(selectedRect);
 
-                cutRects[index] = new Rectangle(selectedRect.X + dx - offset.X, selectedRect.Y + dy - offset.Y, selectedRect.Width, selectedRect.Height);
+                cutRects[index] = new Rectangle(
+                    selectedRect.X + dx - offset.X, 
+                    selectedRect.Y + dy - offset.Y,
+                    selectedRect.Width,
+                    selectedRect.Height
+                    );
 
 
- 
                 selectedRect = cutRects[index];
                 FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
-
+                
             }
 
         }
@@ -258,13 +256,15 @@ namespace CuttingMachineGUI.Forms
             Pen ligthBluePen = new Pen(RGBColors.blackblue, 1);
 
             myCanvas.FillRectangle(whiteBrush, Rect.X, Rect.Y, Rect.Width, Rect.Height);
-            myCanvas.DrawRectangle(ligthBluePen, Rect.X, Rect.Y, Rect.Width - 1, Rect.Width - 1);
+            myCanvas.DrawRectangle(ligthBluePen, Rect.X, Rect.Y, Rect.Width, Rect.Width);
 
         }
 
         private void FabricPanel_MouseUp(object sender, MouseEventArgs e)
         {
+            lastSelectedRect = selectedRect;
             selectedRect = Rectangle.Empty;
+            Console.WriteLine("cleaning selected rect");
         }
 
         private void FabricPanel_MouseClick(object sender, MouseEventArgs e)
@@ -281,6 +281,12 @@ namespace CuttingMachineGUI.Forms
                     }
                 }
             }
+        }
+
+        private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EraseDrawnRect(lastSelectedRect);
+            cutRects.Remove(lastSelectedRect);
         }
     }
 }
