@@ -1,6 +1,6 @@
 # `CuttingMachineGUI`
 
-this projects consists in a GUI for a fabric cutting machine, this machine is controlled by a CPU KV-8000 (Keyence) and the control its made by TCP communication protocol
+this project consists in a GUI for a fabric cutting machine, this machine is controlled by a CPU KV-8000 (Keyence) and the control its made by TCP communication protocol
 
 ## Panels
 
