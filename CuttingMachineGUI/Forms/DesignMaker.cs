@@ -9,47 +9,62 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using System.Windows.Media.Media3D;
-using System.Windows;
+using System.IO;
+using System.Text.Json;
 using Size = System.Drawing.Size;
 using Point = System.Drawing.Point;
 using MessageBox = System.Windows.Forms.MessageBox;
-
-
+using CuttingMachineGUI.BusinessLogic.Models;
 
 namespace CuttingMachineGUI.Forms
 {
     public partial class DesignMaker : Form
     {
 
-        private Graphics myCanvas;
-        private Rectangle selectedRect;
-        private Rectangle lastSelectedRect;
-        private Point offset;
+        private Canvas myCanvas;
 
-
-
-        private int SurfaceWidth = Convert.ToInt32(ConfigurationManager.AppSettings["SurfaceWidth"]);
-        private int SurfaceHeight = Convert.ToInt32(ConfigurationManager.AppSettings["SurfaceHeight"]);
-        private int FabricHeight = Convert.ToInt32(ConfigurationManager.AppSettings["FabricHeight"]);
-        private int DistanceBetweenCuts = Convert.ToInt32(ConfigurationManager.AppSettings["DistanceBetweenCuts"]);
-        private int CutsMargin = Convert.ToInt32(ConfigurationManager.AppSettings["CutsMargin"]);
-        private string Units = ConfigurationManager.AppSettings["Units"];
-
-
-        List<Rectangle> cutRects = new List<Rectangle>();
 
 
         public DesignMaker()
         {
             InitializeComponent();
-            System.Windows.Forms.ToolTip SingleCutBtnTooltip = new System.Windows.Forms.ToolTip();
+
+            InitializeTooltips();
+
+
+            myCanvas = new Canvas(FabricPanel);
+            FabricPanel.Location = new Point(0, 0);
+            BgPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.SurfaceHeight);
+            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.FabricHeight);
+
+
+        }
+
+
+
+
+        private void InitializeTooltips()
+        {
+            ToolTip SingleCutBtnTooltip = new ToolTip();
             SingleCutBtnTooltip.SetToolTip(this.SingleCutBtn, "agregar un corte");
 
-            System.Windows.Forms.ToolTip MatrixCutBtnTooltip = new System.Windows.Forms.ToolTip();
+            ToolTip MatrixCutBtnTooltip = new ToolTip();
             MatrixCutBtnTooltip.SetToolTip(this.MatrixCutBtn, "agregar matriz de cortes");
 
-            myCanvas = this.FabricPanel.CreateGraphics();
+            ToolTip ClearBtnTooltip = new ToolTip();
+            ClearBtnTooltip.SetToolTip(this.ClearBtn, "borrar diseño actual");
+
+            ToolTip SortBtnTooltip = new ToolTip();
+            SortBtnTooltip.SetToolTip(this.SortBtn, "optimizar espacio");
+
+            ToolTip LoadDesignBtnTooltip = new ToolTip();
+            LoadDesignBtnTooltip.SetToolTip(this.LoadDesignBtn, "cargar diseño");
+
+            ToolTip SaveDesignBtnBtnTooltip = new ToolTip();
+            SaveDesignBtnBtnTooltip.SetToolTip(this.SaveDesignBtn, "guardar diseño");
+
+            ToolTip DesignSettingsBtnTooltip = new ToolTip();
+            DesignSettingsBtnTooltip.SetToolTip(this.DesignSettingsBtn, "ajustes de diseño");
         }
 
         private struct RGBColors
@@ -62,92 +77,18 @@ namespace CuttingMachineGUI.Forms
             public static Color blackblue = Color.FromArgb(10, 0, 30);
             public static Color erasecolor = Color.FromArgb(10, 0, 30);
 
-            //10, 0, 30
-
         }
-
-        private (int, int) getNextCutPosition(int newWidth, int newHeight)
-        {
-
-            int x = -1;
-            int y = -1;
-
-            if (cutRects.Count == 0)
-            {
-                return (CutsMargin, CutsMargin);
-            }
-            else
-            {
-                Rectangle lastCutRect = cutRects.Last();
-
-                if (lastCutRect.Right + newWidth + DistanceBetweenCuts <= FabricPanel.ClientSize.Width)
-                {
-                    // There is enough space to add the new cut to the right of the last cut
-                    x = lastCutRect.Right + DistanceBetweenCuts;
-                    y = CutsMargin;
-
-
-                }
-                else if (lastCutRect.Bottom + newHeight + DistanceBetweenCuts <= FabricPanel.ClientSize.Height)
-                {
-                    // There is not enough space to add the new cut to the right of the last cut, so add it below the last cut
-                    x = CutsMargin;
-                    y = lastCutRect.Bottom + DistanceBetweenCuts;
-
-                }
-
-                foreach (var cut in cutRects)
-                {
-                    if (cut.IntersectsWith(new Rectangle(x, y, newWidth, newHeight)))
-                    {
-                        // There is overlap, so return (-1, -1)
-                        return (-1, -1);
-                    }
-                }
-                return (x, y);
-
-            }
-        }
-
-        private void AddFigureToCanvas(int width, int height)
-        {
-            SolidBrush whiteBrush = new SolidBrush(Color.White);
-            Pen lightBluePen = new Pen(Color.Green, 1);
-
-
-            Size canvasSize = FabricPanel.ClientSize;
-            (int x, int y) = getNextCutPosition(width, height);
-
-
-
-            if (x >= 0 && y >= 0)
-            {
-                Rectangle nextRect = new Rectangle(x, y, width, height);
-                myCanvas.FillRectangle(whiteBrush, nextRect);
-                myCanvas.DrawRectangle(lightBluePen, nextRect);
-                cutRects.Add(nextRect);
-
-
-            }
-            else
-            {
-                MessageBox.Show("invalid figure");
-            }
-
-        }
-
 
         private void SingleCutBtn_Click(object sender, EventArgs e)
         {
 
-            SubForms.NewSingleCut newForm = new SubForms.NewSingleCut("Agregar corte", Units, false);
+            SubForms.NewSingleCut newForm = new SubForms.NewSingleCut("Agregar corte", myCanvas.Units, false);
 
             newForm.StartPosition = FormStartPosition.CenterScreen;
 
-
             if (newForm.ShowDialog() == DialogResult.OK)
             {
-                AddFigureToCanvas(newForm.HorizontalDistance, newForm.VerticalDistance);
+                myCanvas.AddRect(newForm.HorizontalDistance, newForm.VerticalDistance);
             }
 
             newForm.Close();
@@ -155,69 +96,31 @@ namespace CuttingMachineGUI.Forms
 
         private void BgPanel_Paint(object sender, PaintEventArgs e)
         {
-            this.BgPanel.Size = new Size(SurfaceWidth, SurfaceHeight);
             ControlPaint.DrawBorder(e.Graphics, this.BgPanel.ClientRectangle, Color.Green, ButtonBorderStyle.Solid);
-
         }
 
 
         private void FabricPanel_Paint(object sender, PaintEventArgs e)
         {
-            myCanvas = this.FabricPanel.CreateGraphics();
-            this.FabricPanel.Size = new Size(SurfaceWidth, FabricHeight);
-            this.FabricPanel.Location = new Point(0, SurfaceHeight - this.FabricPanel.Size.Height);
+            myCanvas.UpdateGraphics();
             ControlPaint.DrawBorder(e.Graphics, this.FabricPanel.ClientRectangle, Color.LightBlue, ButtonBorderStyle.Solid);
 
-
             // Redraw all the figures
-            SolidBrush whiteBrush = new SolidBrush(Color.White);
-            Pen ligthBluePen = new Pen(Color.Green, 1);
-            foreach (Rectangle cutRect in cutRects)
-            {
-                int x = cutRect.X;
-                int y = cutRect.Y;
-                int width = cutRect.Width;
-                int height = cutRect.Height;
-                e.Graphics.FillRectangle(whiteBrush, x, y, width, height);
-                e.Graphics.DrawRectangle(ligthBluePen, x, y, width - 1, height - 1);
-            }
+            myCanvas.Redraw(e);
 
         }
 
-        private void ClearBtn_Click(object sender, EventArgs e)
-        {
 
-
-            DialogResult result = MessageBox.Show(
-                "No se han guardado las ultimas modificaciones, seguro que quiere continuar?",
-                "Borrar diseño actual",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                );
-
-            if (result == DialogResult.Yes)
-            {
-                myCanvas = this.FabricPanel.CreateGraphics();
-                cutRects.Clear();
-                myCanvas.Clear(RGBColors.blackblue);
-
-                this.FabricPanel.Size = new Size(SurfaceWidth, FabricHeight);
-                this.FabricPanel.Location = new Point(0, SurfaceHeight - this.FabricPanel.Size.Height);
-                ControlPaint.DrawBorder(myCanvas, this.FabricPanel.ClientRectangle, Color.LightBlue, ButtonBorderStyle.Solid);
-
-
-            }
-
-
-        }
 
         private void FabricPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            foreach (Rectangle cutRect in cutRects)
+            FabricPanel.SuspendLayout();
+            foreach (Rectangle Rect in myCanvas.Rects)
             {
-                if (cutRect.Contains(e.Location))
+                if (Rect.Contains(e.Location))
                 {
-                    selectedRect = cutRect;
-                    offset = new Point(e.Location.X - cutRect.X, e.Location.Y - cutRect.Y);
+                    myCanvas.selectedRect = Rect;
+                    myCanvas.offset = new Point(e.Location.X - Rect.X, e.Location.Y - Rect.Y);
                     break;
                 }
 
@@ -227,54 +130,42 @@ namespace CuttingMachineGUI.Forms
         private void FabricPanel_MouseMove(object sender, MouseEventArgs e)
         {
 
-            if (selectedRect != Rectangle.Empty)
+            if (myCanvas.selectedRect != Rectangle.Empty)
             {
 
+                int dx = (e.Location.X - myCanvas.selectedRect.X);
+                int dy = (e.Location.Y - myCanvas.selectedRect.Y);
 
-                int dx = (e.Location.X - selectedRect.X);
-                int dy = (e.Location.Y - selectedRect.Y);
+                int index = myCanvas.Rects.IndexOf(myCanvas.selectedRect);
 
-                int index = cutRects.IndexOf(selectedRect);
-
-
-                EraseDrawnRect(selectedRect);
-
-                cutRects[index] = new Rectangle(
-                    selectedRect.X + dx - offset.X,
-                    selectedRect.Y + dy - offset.Y,
-                    selectedRect.Width,
-                    selectedRect.Height
+                myCanvas.Rects[index] = new Rectangle(
+                    myCanvas.selectedRect.X + dx - myCanvas.offset.X,
+                    myCanvas.selectedRect.Y + dy - myCanvas.offset.Y,
+                    myCanvas.selectedRect.Width,
+                    myCanvas.selectedRect.Height
                     );
 
-
-                selectedRect = cutRects[index];
-                FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
+                myCanvas.selectedRect = myCanvas.Rects[index];
+                FabricPanel.Invalidate();
 
             }
 
         }
 
-        private void EraseDrawnRect(Rectangle Rect)
-        {
-            SolidBrush eraser = new SolidBrush(RGBColors.blackblue);
 
-            myCanvas.FillRectangle(eraser, Rect.X, Rect.Y, Rect.Width + 1, Rect.Height + 1);
-
-
-        }
 
         private void FabricPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            lastSelectedRect = selectedRect;
-            selectedRect = Rectangle.Empty;
-            Console.WriteLine("cleaning selected rect");
+            FabricPanel.ResumeLayout();
+            myCanvas.lastSelectedRect = myCanvas.selectedRect;
+            myCanvas.selectedRect = Rectangle.Empty;
         }
 
         private void FabricPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                foreach (Rectangle rect in cutRects) // myRectangles is a List<Rectangle> that contains your drawn rectangles
+                foreach (Rectangle rect in myCanvas.Rects) // myRectangles is a List<Rectangle> that contains your drawn rectangles
                 {
                     if (rect.Contains(e.Location))
                     {
@@ -288,32 +179,31 @@ namespace CuttingMachineGUI.Forms
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EraseDrawnRect(lastSelectedRect);
-            cutRects.Remove(lastSelectedRect);
+            EraseDrawnRect(myCanvas.lastSelectedRect);
+            myCanvas.Rects.Remove(myCanvas.lastSelectedRect);
         }
 
         private void redimensionarToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            SubForms.NewSingleCut newCutForm = new SubForms.NewSingleCut("Redimensionar", Units, false);
+            SubForms.NewSingleCut newCutForm = new SubForms.NewSingleCut("Redimensionar", myCanvas.Units, false);
 
             newCutForm.StartPosition = FormStartPosition.CenterScreen;
 
 
             if (newCutForm.ShowDialog() == DialogResult.OK)
             {
-                Console.WriteLine("rdimesioning");
-                EraseDrawnRect(lastSelectedRect);
-                int index = cutRects.IndexOf(lastSelectedRect);
 
-                cutRects[index] = new Rectangle(
-                    lastSelectedRect.X,
-                    lastSelectedRect.Y,
+                EraseDrawnRect(myCanvas.lastSelectedRect);
+                int index = myCanvas.Rects.IndexOf(myCanvas.lastSelectedRect);
+
+                myCanvas.Rects[index] = new Rectangle(
+                    myCanvas.lastSelectedRect.X,
+                    myCanvas.lastSelectedRect.Y,
                     newCutForm.HorizontalDistance, //width
                     newCutForm.VerticalDistance    //height
                     );
-                FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
-
+                FabricPanel.Invalidate();
             }
 
             newCutForm.Close();
@@ -322,20 +212,92 @@ namespace CuttingMachineGUI.Forms
 
         private void rotarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EraseDrawnRect(lastSelectedRect);
+            EraseDrawnRect(myCanvas.lastSelectedRect);
 
             Rectangle rotatedRect = new Rectangle(
-                lastSelectedRect.Location,
+                myCanvas.lastSelectedRect.Location,
                 new Size(
-                    lastSelectedRect.Height,
-                    lastSelectedRect.Width
+                    myCanvas.lastSelectedRect.Height,
+                    myCanvas.lastSelectedRect.Width
                     )
                 );
 
-            int index = cutRects.IndexOf(lastSelectedRect);
-            cutRects[index] = rotatedRect;
-            FabricPanel_Paint(sender, new PaintEventArgs(myCanvas, FabricPanel.ClientRectangle));
+            int index = myCanvas.Rects.IndexOf(myCanvas.lastSelectedRect);
+            myCanvas.Rects[index] = rotatedRect;
+            FabricPanel.Invalidate();
+        }
 
+        private void SaveDesignBtn_Click(object sender, EventArgs e)
+        {
+            // Prompt the user to select a file location to save the JSON file
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+            saveFileDialog.Title = "Save rectangles as JSON file";
+            saveFileDialog.FileName = JsonFileNameLbl.Text;
+            DialogResult result = saveFileDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                // Serialize the list of rectangles to a JSON string
+                string jsonString = JsonSerializer.Serialize(myCanvas.Rects);
+
+                // Write the JSON string to the specified file path
+                File.WriteAllText(filePath, jsonString);
+                JsonFileNameLbl.Text = filePath.Split('\\').Last();
+
+            }
+        }
+
+        private void LoadFileBtn_Click(object sender, EventArgs e)
+        {
+            
+            // Prompt the user to select a file
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json";
+            openFileDialog.Title = "Open Json file";
+            DialogResult result = openFileDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                myCanvas.Clear();
+                string filePath = openFileDialog.FileName;
+
+                // Read the contents of the file
+                string fileContents = File.ReadAllText(filePath);
+
+                // Display the rects in canvas
+                myCanvas.Rects = JsonSerializer.Deserialize<List<Rectangle>>(fileContents);
+                FabricPanel.Invalidate();
+                JsonFileNameLbl.Text = filePath.Split('\\').Last();
+            }
+        }
+
+        private void EraseDrawnRect(Rectangle Rect)
+        {
+            SolidBrush eraser = new SolidBrush(RGBColors.blackblue);
+            myCanvas.graphics.FillRectangle(eraser, Rect.X, Rect.Y, Rect.Width + 1, Rect.Height + 1);
+
+        }
+
+        private void ClearBtn_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show(
+                "No se han guardado las ultimas modificaciones, seguro que quiere continuar?",
+                "Borrar diseño actual",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                );
+
+            if (result == DialogResult.Yes)
+            {
+                myCanvas.Clear();
+
+                ControlPaint.DrawBorder(myCanvas.graphics, this.FabricPanel.ClientRectangle, Color.LightBlue, ButtonBorderStyle.Solid);
+
+
+            }
         }
     }
 }

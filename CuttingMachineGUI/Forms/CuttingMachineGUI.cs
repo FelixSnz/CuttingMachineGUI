@@ -14,7 +14,7 @@ using Point = System.Drawing.Point;
 
 namespace CuttingMachineGUI
 {
-    public partial class Form1 : Form
+    public partial class CuttingMachineGUI : Form
     {
 
 
@@ -37,7 +37,7 @@ namespace CuttingMachineGUI
         }
 
 
-        public Form1()
+        public CuttingMachineGUI()
         {
             InitializeComponent();
 

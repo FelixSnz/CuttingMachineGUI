@@ -1,4 +1,6 @@
-﻿namespace CuttingMachineGUI.Forms
+﻿using CuttingMachineGUI.Components;
+
+namespace CuttingMachineGUI.Forms
 {
     partial class DesignMaker
     {
@@ -30,16 +32,16 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.JsonFileNameLbl = new System.Windows.Forms.Label();
             this.ClearBtn = new FontAwesome.Sharp.IconButton();
-            this.iconButton2 = new FontAwesome.Sharp.IconButton();
-            this.iconButton1 = new FontAwesome.Sharp.IconButton();
+            this.SortBtn = new FontAwesome.Sharp.IconButton();
+            this.LoadDesignBtn = new FontAwesome.Sharp.IconButton();
             this.SaveDesignBtn = new FontAwesome.Sharp.IconButton();
             this.DesignSettingsBtn = new FontAwesome.Sharp.IconButton();
             this.MatrixCutBtn = new FontAwesome.Sharp.IconButton();
             this.SingleCutBtn = new FontAwesome.Sharp.IconButton();
             this.BgPanel = new System.Windows.Forms.Panel();
-            this.FabricPanel = new System.Windows.Forms.Panel();
+            this.FabricPanel = new MyPanel();
             this.figureMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.rotarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redimensionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,10 +54,10 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(39)))), ((int)(((byte)(80)))));
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.JsonFileNameLbl);
             this.panel1.Controls.Add(this.ClearBtn);
-            this.panel1.Controls.Add(this.iconButton2);
-            this.panel1.Controls.Add(this.iconButton1);
+            this.panel1.Controls.Add(this.SortBtn);
+            this.panel1.Controls.Add(this.LoadDesignBtn);
             this.panel1.Controls.Add(this.SaveDesignBtn);
             this.panel1.Controls.Add(this.DesignSettingsBtn);
             this.panel1.Controls.Add(this.MatrixCutBtn);
@@ -66,16 +68,16 @@
             this.panel1.Size = new System.Drawing.Size(1131, 80);
             this.panel1.TabIndex = 0;
             // 
-            // label1
+            // JsonFileNameLbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(237, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 27);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "SinTitulo.json";
+            this.JsonFileNameLbl.AutoSize = true;
+            this.JsonFileNameLbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JsonFileNameLbl.ForeColor = System.Drawing.Color.Gainsboro;
+            this.JsonFileNameLbl.Location = new System.Drawing.Point(237, 25);
+            this.JsonFileNameLbl.Name = "JsonFileNameLbl";
+            this.JsonFileNameLbl.Size = new System.Drawing.Size(162, 27);
+            this.JsonFileNameLbl.TabIndex = 22;
+            this.JsonFileNameLbl.Text = "SinTitulo.json";
             // 
             // ClearBtn
             // 
@@ -97,42 +99,43 @@
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
-            // iconButton2
+            // SortBtn
             // 
-            this.iconButton2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.iconButton2.FlatAppearance.BorderSize = 0;
-            this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton2.IconChar = FontAwesome.Sharp.IconChar.LayerGroup;
-            this.iconButton2.IconColor = System.Drawing.Color.White;
-            this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton2.Location = new System.Drawing.Point(115, 0);
-            this.iconButton2.Name = "iconButton2";
-            this.iconButton2.Size = new System.Drawing.Size(58, 80);
-            this.iconButton2.TabIndex = 20;
-            this.iconButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.iconButton2.UseVisualStyleBackColor = true;
+            this.SortBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.SortBtn.FlatAppearance.BorderSize = 0;
+            this.SortBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SortBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SortBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.SortBtn.IconChar = FontAwesome.Sharp.IconChar.LayerGroup;
+            this.SortBtn.IconColor = System.Drawing.Color.White;
+            this.SortBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.SortBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SortBtn.Location = new System.Drawing.Point(115, 0);
+            this.SortBtn.Name = "SortBtn";
+            this.SortBtn.Size = new System.Drawing.Size(58, 80);
+            this.SortBtn.TabIndex = 20;
+            this.SortBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SortBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SortBtn.UseVisualStyleBackColor = true;
             // 
-            // iconButton1
+            // LoadDesignBtn
             // 
-            this.iconButton1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.iconButton1.FlatAppearance.BorderSize = 0;
-            this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.File;
-            this.iconButton1.IconColor = System.Drawing.Color.White;
-            this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton1.Location = new System.Drawing.Point(941, 0);
-            this.iconButton1.Name = "iconButton1";
-            this.iconButton1.Size = new System.Drawing.Size(66, 80);
-            this.iconButton1.TabIndex = 19;
-            this.iconButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.iconButton1.UseVisualStyleBackColor = true;
+            this.LoadDesignBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LoadDesignBtn.FlatAppearance.BorderSize = 0;
+            this.LoadDesignBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LoadDesignBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoadDesignBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.LoadDesignBtn.IconChar = FontAwesome.Sharp.IconChar.File;
+            this.LoadDesignBtn.IconColor = System.Drawing.Color.White;
+            this.LoadDesignBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.LoadDesignBtn.Location = new System.Drawing.Point(941, 0);
+            this.LoadDesignBtn.Name = "LoadDesignBtn";
+            this.LoadDesignBtn.Size = new System.Drawing.Size(66, 80);
+            this.LoadDesignBtn.TabIndex = 19;
+            this.LoadDesignBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LoadDesignBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.LoadDesignBtn.UseVisualStyleBackColor = true;
+            this.LoadDesignBtn.Click += new System.EventHandler(this.LoadFileBtn_Click);
             // 
             // SaveDesignBtn
             // 
@@ -151,6 +154,7 @@
             this.SaveDesignBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SaveDesignBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.SaveDesignBtn.UseVisualStyleBackColor = true;
+            this.SaveDesignBtn.Click += new System.EventHandler(this.SaveDesignBtn_Click);
             // 
             // DesignSettingsBtn
             // 
@@ -222,13 +226,10 @@
             // 
             // FabricPanel
             // 
-            this.FabricPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.FabricPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(0)))), ((int)(((byte)(30)))));
-            this.FabricPanel.Location = new System.Drawing.Point(3, 160);
+            this.FabricPanel.Location = new System.Drawing.Point(3, 3);
             this.FabricPanel.Name = "FabricPanel";
-            this.FabricPanel.Size = new System.Drawing.Size(724, 318);
-            this.FabricPanel.TabIndex = 4;
+            this.FabricPanel.Size = new System.Drawing.Size(200, 100);
+            this.FabricPanel.TabIndex = 0;
             this.FabricPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.FabricPanel_Paint);
             this.FabricPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseClick);
             this.FabricPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseDown);
@@ -243,26 +244,26 @@
             this.redimensionarToolStripMenuItem,
             this.eliminarToolStripMenuItem});
             this.figureMenuStrip.Name = "figureMenuStrip";
-            this.figureMenuStrip.Size = new System.Drawing.Size(211, 104);
+            this.figureMenuStrip.Size = new System.Drawing.Size(174, 76);
             // 
             // rotarToolStripMenuItem
             // 
             this.rotarToolStripMenuItem.Name = "rotarToolStripMenuItem";
-            this.rotarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.rotarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.rotarToolStripMenuItem.Text = "rotar";
             this.rotarToolStripMenuItem.Click += new System.EventHandler(this.rotarToolStripMenuItem_Click);
             // 
             // redimensionarToolStripMenuItem
             // 
             this.redimensionarToolStripMenuItem.Name = "redimensionarToolStripMenuItem";
-            this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.redimensionarToolStripMenuItem.Text = "redimensionar";
             this.redimensionarToolStripMenuItem.Click += new System.EventHandler(this.redimensionarToolStripMenuItem_Click);
             // 
             // eliminarToolStripMenuItem
             // 
             this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
-            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.eliminarToolStripMenuItem.Text = "eliminar";
             this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
             // 
@@ -291,15 +292,15 @@
         private FontAwesome.Sharp.IconButton MatrixCutBtn;
         private FontAwesome.Sharp.IconButton SingleCutBtn;
         private System.Windows.Forms.Panel BgPanel;
-        private System.Windows.Forms.Panel FabricPanel;
-        private FontAwesome.Sharp.IconButton iconButton2;
-        private FontAwesome.Sharp.IconButton iconButton1;
+        private FontAwesome.Sharp.IconButton SortBtn;
+        private FontAwesome.Sharp.IconButton LoadDesignBtn;
         private FontAwesome.Sharp.IconButton SaveDesignBtn;
         private FontAwesome.Sharp.IconButton ClearBtn;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label JsonFileNameLbl;
         private System.Windows.Forms.ContextMenuStrip figureMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem rotarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redimensionarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
+        private Components.MyPanel FabricPanel;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CuttingMachineGUI
 {
-    partial class Form1
+    partial class CuttingMachineGUI
     {
         /// <summary>
         /// Required designer variable.
