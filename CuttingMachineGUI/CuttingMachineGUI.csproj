@@ -123,11 +123,11 @@
     <Compile Include="Forms\Components\MyPanel.Designer.cs">
       <DependentUpon>MyPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CuttingMachineGUI.cs">
+    <Compile Include="Forms\MainPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CuttingMachineGUI.Designer.cs">
-      <DependentUpon>CuttingMachineGUI.cs</DependentUpon>
+    <Compile Include="Forms\MainPanel.Designer.cs">
+      <DependentUpon>MainPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AxisHome.cs">
       <SubType>Form</SubType>
@@ -179,25 +179,26 @@
     <Compile Include="Forms\Popups\CanvasSettings.Designer.cs">
       <DependentUpon>CanvasSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Popups\NewSingleCut.cs">
+    <Compile Include="Forms\Popups\PromptSize.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Popups\NewSingleCut.Designer.cs">
-      <DependentUpon>NewSingleCut.cs</DependentUpon>
+    <Compile Include="Forms\Popups\PromptSize.Designer.cs">
+      <DependentUpon>PromptSize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Polygons.cs" />
     <EmbeddedResource Include="Forms\Popups\CanvasSettings.resx">
       <DependentUpon>CanvasSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Popups\NewSingleCut.resx">
-      <DependentUpon>NewSingleCut.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Popups\PromptSize.resx">
+      <DependentUpon>PromptSize.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Resources\single_cut.png" />
     <None Include="Resources\multiple_cuts.png" />
     <None Include="Resources\multiple_cuts.jpg" />
     <None Include="Resources\single_cut.jpg" />
     <None Include="Resources\logo.png" />
-    <EmbeddedResource Include="Forms\CuttingMachineGUI.resx">
-      <DependentUpon>CuttingMachineGUI.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainPanel.resx">
+      <DependentUpon>MainPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AxisHome.resx">
       <DependentUpon>AxisHome.cs</DependentUpon>
@@ -254,9 +255,8 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BusinessLogic\Services\" />
     <Folder Include="Data\" />
-    <Folder Include="Services\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

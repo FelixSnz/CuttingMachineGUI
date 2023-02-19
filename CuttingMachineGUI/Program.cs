@@ -16,7 +16,7 @@ namespace CuttingMachineGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CuttingMachineGUI());
+            Application.Run(new MainPanel());
         }
     }
 }

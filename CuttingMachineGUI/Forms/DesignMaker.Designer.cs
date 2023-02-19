@@ -41,11 +41,13 @@ namespace CuttingMachineGUI.Forms
             this.MatrixCutBtn = new FontAwesome.Sharp.IconButton();
             this.SingleCutBtn = new FontAwesome.Sharp.IconButton();
             this.BgPanel = new System.Windows.Forms.Panel();
-            this.FabricPanel = new MyPanel();
             this.figureMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.rotarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redimensionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eliminarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FabricPanel = new CuttingMachineGUI.Components.MyPanel();
+            this.UndoBtn = new FontAwesome.Sharp.IconButton();
+            this.RedoBtn = new FontAwesome.Sharp.IconButton();
             this.panel1.SuspendLayout();
             this.BgPanel.SuspendLayout();
             this.figureMenuStrip.SuspendLayout();
@@ -54,6 +56,8 @@ namespace CuttingMachineGUI.Forms
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(39)))), ((int)(((byte)(80)))));
+            this.panel1.Controls.Add(this.RedoBtn);
+            this.panel1.Controls.Add(this.UndoBtn);
             this.panel1.Controls.Add(this.JsonFileNameLbl);
             this.panel1.Controls.Add(this.ClearBtn);
             this.panel1.Controls.Add(this.SortBtn);
@@ -73,7 +77,7 @@ namespace CuttingMachineGUI.Forms
             this.JsonFileNameLbl.AutoSize = true;
             this.JsonFileNameLbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.JsonFileNameLbl.ForeColor = System.Drawing.Color.Gainsboro;
-            this.JsonFileNameLbl.Location = new System.Drawing.Point(237, 25);
+            this.JsonFileNameLbl.Location = new System.Drawing.Point(359, 25);
             this.JsonFileNameLbl.Name = "JsonFileNameLbl";
             this.JsonFileNameLbl.Size = new System.Drawing.Size(162, 27);
             this.JsonFileNameLbl.TabIndex = 22;
@@ -193,6 +197,7 @@ namespace CuttingMachineGUI.Forms
             this.MatrixCutBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MatrixCutBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.MatrixCutBtn.UseVisualStyleBackColor = true;
+            this.MatrixCutBtn.Click += new System.EventHandler(this.MatrixCutBtn_Click);
             // 
             // SingleCutBtn
             // 
@@ -224,6 +229,37 @@ namespace CuttingMachineGUI.Forms
             this.BgPanel.TabIndex = 1;
             this.BgPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.BgPanel_Paint);
             // 
+            // figureMenuStrip
+            // 
+            this.figureMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.figureMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rotateToolStripMenuItem,
+            this.resizeToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.figureMenuStrip.Name = "figureMenuStrip";
+            this.figureMenuStrip.Size = new System.Drawing.Size(174, 76);
+            // 
+            // rotateToolStripMenuItem
+            // 
+            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.rotateToolStripMenuItem.Text = "rotar";
+            this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotateToolStripMenuItem_Click);
+            // 
+            // resizeToolStripMenuItem
+            // 
+            this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.resizeToolStripMenuItem.Text = "redimensionar";
+            this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.deleteToolStripMenuItem.Text = "eliminar";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // FabricPanel
             // 
             this.FabricPanel.Location = new System.Drawing.Point(3, 3);
@@ -236,36 +272,45 @@ namespace CuttingMachineGUI.Forms
             this.FabricPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseMove);
             this.FabricPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseUp);
             // 
-            // figureMenuStrip
+            // UndoBtn
             // 
-            this.figureMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.figureMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rotarToolStripMenuItem,
-            this.redimensionarToolStripMenuItem,
-            this.eliminarToolStripMenuItem});
-            this.figureMenuStrip.Name = "figureMenuStrip";
-            this.figureMenuStrip.Size = new System.Drawing.Size(174, 76);
+            this.UndoBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.UndoBtn.FlatAppearance.BorderSize = 0;
+            this.UndoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UndoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UndoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.UndoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateBack;
+            this.UndoBtn.IconColor = System.Drawing.Color.White;
+            this.UndoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.UndoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoBtn.Location = new System.Drawing.Point(231, 0);
+            this.UndoBtn.Name = "UndoBtn";
+            this.UndoBtn.Size = new System.Drawing.Size(58, 80);
+            this.UndoBtn.TabIndex = 23;
+            this.UndoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.UndoBtn.UseVisualStyleBackColor = true;
+            this.UndoBtn.Click += new System.EventHandler(this.UndoBtn_Click);
             // 
-            // rotarToolStripMenuItem
+            // RedoBtn
             // 
-            this.rotarToolStripMenuItem.Name = "rotarToolStripMenuItem";
-            this.rotarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
-            this.rotarToolStripMenuItem.Text = "rotar";
-            this.rotarToolStripMenuItem.Click += new System.EventHandler(this.rotarToolStripMenuItem_Click);
-            // 
-            // redimensionarToolStripMenuItem
-            // 
-            this.redimensionarToolStripMenuItem.Name = "redimensionarToolStripMenuItem";
-            this.redimensionarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
-            this.redimensionarToolStripMenuItem.Text = "redimensionar";
-            this.redimensionarToolStripMenuItem.Click += new System.EventHandler(this.redimensionarToolStripMenuItem_Click);
-            // 
-            // eliminarToolStripMenuItem
-            // 
-            this.eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
-            this.eliminarToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
-            this.eliminarToolStripMenuItem.Text = "eliminar";
-            this.eliminarToolStripMenuItem.Click += new System.EventHandler(this.eliminarToolStripMenuItem_Click);
+            this.RedoBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RedoBtn.FlatAppearance.BorderSize = 0;
+            this.RedoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RedoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RedoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.RedoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateRight;
+            this.RedoBtn.IconColor = System.Drawing.Color.White;
+            this.RedoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.RedoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RedoBtn.Location = new System.Drawing.Point(289, 0);
+            this.RedoBtn.Name = "RedoBtn";
+            this.RedoBtn.Size = new System.Drawing.Size(58, 80);
+            this.RedoBtn.TabIndex = 24;
+            this.RedoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RedoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.RedoBtn.UseVisualStyleBackColor = true;
+            this.RedoBtn.Click += new System.EventHandler(this.RedoBtn_Click);
             // 
             // DesignMaker
             // 
@@ -298,9 +343,11 @@ namespace CuttingMachineGUI.Forms
         private FontAwesome.Sharp.IconButton ClearBtn;
         private System.Windows.Forms.Label JsonFileNameLbl;
         private System.Windows.Forms.ContextMenuStrip figureMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem rotarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redimensionarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private Components.MyPanel FabricPanel;
+        private FontAwesome.Sharp.IconButton RedoBtn;
+        private FontAwesome.Sharp.IconButton UndoBtn;
     }
 }
