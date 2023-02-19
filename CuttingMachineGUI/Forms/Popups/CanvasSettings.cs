@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CuttingMachineGUI.SubForms
+namespace CuttingMachineGUI.Popups
 {
     public partial class CanvasSettings : Form
     {

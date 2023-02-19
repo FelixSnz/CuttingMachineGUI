@@ -1,4 +1,4 @@
-﻿namespace CuttingMachineGUI.SubForms
+﻿namespace CuttingMachineGUI.Popups
 {
     partial class CanvasSettings
     {
