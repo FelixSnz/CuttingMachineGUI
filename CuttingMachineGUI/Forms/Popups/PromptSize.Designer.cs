@@ -1,6 +1,6 @@
-﻿namespace CuttingMachineGUI.SubForms
+﻿namespace CuttingMachineGUI.Popups
 {
-    partial class NewSingleCut
+    partial class PromptSize
     {
         /// <summary>
         /// Required designer variable.
@@ -34,30 +34,30 @@
             this.OkBtn = new FontAwesome.Sharp.IconButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.VerticalAmountCmbBox = new System.Windows.Forms.NumericUpDown();
+            this.VerticalCopiesCmbBox = new System.Windows.Forms.NumericUpDown();
             this.UnitsLbl2 = new System.Windows.Forms.Label();
-            this.VerticalDistanceTxtBox = new System.Windows.Forms.TextBox();
+            this.HeightTxtBox = new System.Windows.Forms.TextBox();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.HorizontalAmountCmbBox = new System.Windows.Forms.NumericUpDown();
+            this.HorizontalCopiesCmbBox = new System.Windows.Forms.NumericUpDown();
             this.UnitsLbl1 = new System.Windows.Forms.Label();
-            this.HorizontalDistanceTxtBox = new System.Windows.Forms.TextBox();
+            this.WidthTxtBox = new System.Windows.Forms.TextBox();
             this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.titlePanel = new System.Windows.Forms.Panel();
             this.CloseWindowBtn = new FontAwesome.Sharp.IconButton();
-            this.TitleLabel = new System.Windows.Forms.Label();
+            this.titleLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerticalAmountCmbBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerticalCopiesCmbBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.HorizontalAmountCmbBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HorizontalCopiesCmbBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
-            this.panel3.SuspendLayout();
+            this.titlePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -66,11 +66,11 @@
             this.panel1.Controls.Add(this.panel7);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel4);
-            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.titlePanel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(243, 334);
+            this.panel1.Size = new System.Drawing.Size(233, 334);
             this.panel1.TabIndex = 0;
             // 
             // panel7
@@ -81,7 +81,7 @@
             this.panel7.Location = new System.Drawing.Point(0, 273);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(20);
-            this.panel7.Size = new System.Drawing.Size(243, 68);
+            this.panel7.Size = new System.Drawing.Size(233, 68);
             this.panel7.TabIndex = 4;
             // 
             // CancelBtn
@@ -94,7 +94,7 @@
             this.CancelBtn.IconColor = System.Drawing.Color.Black;
             this.CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.CancelBtn.IconSize = 32;
-            this.CancelBtn.Location = new System.Drawing.Point(148, 20);
+            this.CancelBtn.Location = new System.Drawing.Point(138, 20);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Rotation = 90D;
             this.CancelBtn.Size = new System.Drawing.Size(75, 28);
@@ -127,36 +127,36 @@
             this.panel2.Margin = new System.Windows.Forms.Padding(20);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(20);
-            this.panel2.Size = new System.Drawing.Size(243, 115);
+            this.panel2.Size = new System.Drawing.Size(233, 115);
             this.panel2.TabIndex = 3;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(230)))));
-            this.panel6.Controls.Add(this.VerticalAmountCmbBox);
+            this.panel6.Controls.Add(this.VerticalCopiesCmbBox);
             this.panel6.Controls.Add(this.UnitsLbl2);
-            this.panel6.Controls.Add(this.VerticalDistanceTxtBox);
+            this.panel6.Controls.Add(this.HeightTxtBox);
             this.panel6.Controls.Add(this.iconPictureBox1);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(20, 20);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(15);
-            this.panel6.Size = new System.Drawing.Size(203, 72);
+            this.panel6.Size = new System.Drawing.Size(193, 72);
             this.panel6.TabIndex = 0;
             // 
-            // VerticalAmountCmbBox
+            // VerticalCopiesCmbBox
             // 
-            this.VerticalAmountCmbBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VerticalAmountCmbBox.Location = new System.Drawing.Point(209, 25);
-            this.VerticalAmountCmbBox.Minimum = new decimal(new int[] {
+            this.VerticalCopiesCmbBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VerticalCopiesCmbBox.Location = new System.Drawing.Point(209, 25);
+            this.VerticalCopiesCmbBox.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.VerticalAmountCmbBox.Name = "VerticalAmountCmbBox";
-            this.VerticalAmountCmbBox.Size = new System.Drawing.Size(41, 30);
-            this.VerticalAmountCmbBox.TabIndex = 4;
-            this.VerticalAmountCmbBox.Value = new decimal(new int[] {
+            this.VerticalCopiesCmbBox.Name = "VerticalCopiesCmbBox";
+            this.VerticalCopiesCmbBox.Size = new System.Drawing.Size(41, 30);
+            this.VerticalCopiesCmbBox.TabIndex = 4;
+            this.VerticalCopiesCmbBox.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -171,13 +171,15 @@
             this.UnitsLbl2.TabIndex = 3;
             this.UnitsLbl2.Text = "UnitLbl2";
             // 
-            // VerticalDistanceTxtBox
+            // HeightTxtBox
             // 
-            this.VerticalDistanceTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VerticalDistanceTxtBox.Location = new System.Drawing.Point(68, 23);
-            this.VerticalDistanceTxtBox.Name = "VerticalDistanceTxtBox";
-            this.VerticalDistanceTxtBox.Size = new System.Drawing.Size(86, 34);
-            this.VerticalDistanceTxtBox.TabIndex = 1;
+            this.HeightTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HeightTxtBox.Location = new System.Drawing.Point(68, 23);
+            this.HeightTxtBox.Name = "HeightTxtBox";
+            this.HeightTxtBox.Size = new System.Drawing.Size(86, 34);
+            this.HeightTxtBox.TabIndex = 1;
+            this.HeightTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HeightTxtBox_KeyDown);
+            this.HeightTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HeightTxtBox_KeyPress);
             // 
             // iconPictureBox1
             // 
@@ -202,36 +204,36 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(20);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(20);
-            this.panel4.Size = new System.Drawing.Size(243, 115);
+            this.panel4.Size = new System.Drawing.Size(233, 115);
             this.panel4.TabIndex = 2;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(230)))));
-            this.panel5.Controls.Add(this.HorizontalAmountCmbBox);
+            this.panel5.Controls.Add(this.HorizontalCopiesCmbBox);
             this.panel5.Controls.Add(this.UnitsLbl1);
-            this.panel5.Controls.Add(this.HorizontalDistanceTxtBox);
+            this.panel5.Controls.Add(this.WidthTxtBox);
             this.panel5.Controls.Add(this.iconPictureBox2);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(20, 20);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(15);
-            this.panel5.Size = new System.Drawing.Size(203, 72);
+            this.panel5.Size = new System.Drawing.Size(193, 72);
             this.panel5.TabIndex = 0;
             // 
-            // HorizontalAmountCmbBox
+            // HorizontalCopiesCmbBox
             // 
-            this.HorizontalAmountCmbBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HorizontalAmountCmbBox.Location = new System.Drawing.Point(209, 22);
-            this.HorizontalAmountCmbBox.Minimum = new decimal(new int[] {
+            this.HorizontalCopiesCmbBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HorizontalCopiesCmbBox.Location = new System.Drawing.Point(209, 22);
+            this.HorizontalCopiesCmbBox.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.HorizontalAmountCmbBox.Name = "HorizontalAmountCmbBox";
-            this.HorizontalAmountCmbBox.Size = new System.Drawing.Size(41, 30);
-            this.HorizontalAmountCmbBox.TabIndex = 3;
-            this.HorizontalAmountCmbBox.Value = new decimal(new int[] {
+            this.HorizontalCopiesCmbBox.Name = "HorizontalCopiesCmbBox";
+            this.HorizontalCopiesCmbBox.Size = new System.Drawing.Size(41, 30);
+            this.HorizontalCopiesCmbBox.TabIndex = 3;
+            this.HorizontalCopiesCmbBox.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -246,13 +248,15 @@
             this.UnitsLbl1.TabIndex = 2;
             this.UnitsLbl1.Text = "UnitLbl1";
             // 
-            // HorizontalDistanceTxtBox
+            // WidthTxtBox
             // 
-            this.HorizontalDistanceTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HorizontalDistanceTxtBox.Location = new System.Drawing.Point(68, 23);
-            this.HorizontalDistanceTxtBox.Name = "HorizontalDistanceTxtBox";
-            this.HorizontalDistanceTxtBox.Size = new System.Drawing.Size(86, 34);
-            this.HorizontalDistanceTxtBox.TabIndex = 1;
+            this.WidthTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WidthTxtBox.Location = new System.Drawing.Point(68, 23);
+            this.WidthTxtBox.Name = "WidthTxtBox";
+            this.WidthTxtBox.Size = new System.Drawing.Size(86, 34);
+            this.WidthTxtBox.TabIndex = 1;
+            this.WidthTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WidthTxtBox_KeyDown);
+            this.WidthTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WidthTxtBox_KeyPress);
             // 
             // iconPictureBox2
             // 
@@ -269,18 +273,18 @@
             this.iconPictureBox2.TabIndex = 0;
             this.iconPictureBox2.TabStop = false;
             // 
-            // panel3
+            // titlePanel
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(25)))), ((int)(((byte)(62)))));
-            this.panel3.Controls.Add(this.CloseWindowBtn);
-            this.panel3.Controls.Add(this.TitleLabel);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(243, 43);
-            this.panel3.TabIndex = 1;
-            this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
+            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(25)))), ((int)(((byte)(62)))));
+            this.titlePanel.Controls.Add(this.CloseWindowBtn);
+            this.titlePanel.Controls.Add(this.titleLabel);
+            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.titlePanel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titlePanel.Location = new System.Drawing.Point(0, 0);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(233, 43);
+            this.titlePanel.TabIndex = 1;
+            this.titlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.titlePanel_MouseDown);
             // 
             // CloseWindowBtn
             // 
@@ -294,7 +298,7 @@
             this.CloseWindowBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.CloseWindowBtn.IconSize = 20;
             this.CloseWindowBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.CloseWindowBtn.Location = new System.Drawing.Point(202, 0);
+            this.CloseWindowBtn.Location = new System.Drawing.Point(192, 0);
             this.CloseWindowBtn.Name = "CloseWindowBtn";
             this.CloseWindowBtn.Rotation = 90D;
             this.CloseWindowBtn.Size = new System.Drawing.Size(41, 43);
@@ -305,41 +309,40 @@
             this.CloseWindowBtn.UseVisualStyleBackColor = true;
             this.CloseWindowBtn.Click += new System.EventHandler(this.CloseWindowBtn_Click);
             // 
-            // TitleLabel
+            // titleLabel
             // 
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.TitleLabel.Location = new System.Drawing.Point(15, 10);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(163, 23);
-            this.TitleLabel.TabIndex = 0;
-            this.TitleLabel.Text = "Agregar Cortes";
-            this.TitleLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label3_MouseDown);
+            this.titleLabel.AutoSize = true;
+            this.titleLabel.ForeColor = System.Drawing.Color.Gainsboro;
+            this.titleLabel.Location = new System.Drawing.Point(15, 10);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(163, 23);
+            this.titleLabel.TabIndex = 0;
+            this.titleLabel.Text = "Agregar Cortes";
+            this.titleLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.titleLabel_MouseDown);
             // 
-            // NewSingleCut
+            // PromptSize
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(243, 334);
+            this.ClientSize = new System.Drawing.Size(233, 334);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "NewSingleCut";
+            this.Name = "PromptSize";
             this.Text = "Nuevo Corte";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NewSingleCut_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VerticalAmountCmbBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VerticalCopiesCmbBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.HorizontalAmountCmbBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HorizontalCopiesCmbBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.titlePanel.ResumeLayout(false);
+            this.titlePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -353,17 +356,17 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label UnitsLbl2;
-        private System.Windows.Forms.TextBox VerticalDistanceTxtBox;
+        private System.Windows.Forms.TextBox HeightTxtBox;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label UnitsLbl1;
-        private System.Windows.Forms.TextBox HorizontalDistanceTxtBox;
+        private System.Windows.Forms.TextBox WidthTxtBox;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
-        private System.Windows.Forms.NumericUpDown VerticalAmountCmbBox;
-        private System.Windows.Forms.NumericUpDown HorizontalAmountCmbBox;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.NumericUpDown VerticalCopiesCmbBox;
+        private System.Windows.Forms.NumericUpDown HorizontalCopiesCmbBox;
+        private System.Windows.Forms.Panel titlePanel;
+        private System.Windows.Forms.Label titleLabel;
         private FontAwesome.Sharp.IconButton CloseWindowBtn;
     }
 }
