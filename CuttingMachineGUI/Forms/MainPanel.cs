@@ -11,12 +11,12 @@ using System.Windows;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
 using Point = System.Drawing.Point;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace CuttingMachineGUI
 {
-    public partial class CuttingMachineGUI : Form
+    public partial class MainPanel : Form
     {
-
 
         //private fields
         private IconButton CurrentBtn;
@@ -37,7 +37,7 @@ namespace CuttingMachineGUI
         }
 
 
-        public CuttingMachineGUI()
+        public MainPanel()
         {
             InitializeComponent();
 
@@ -51,18 +51,30 @@ namespace CuttingMachineGUI
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
-
         }
+
+
+        //Drag Form
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
 
         private void HighligthBtn(object senderBtn, Color color)
         {
-            Console.WriteLine("asdasdasd");
-            
+
             if (senderBtn != null)
             {
                 UnHighligthCurrentBtn();
 
-                Console.WriteLine("hola");
+
                 //current button
                 CurrentBtn = (IconButton)senderBtn;
                 CurrentBtn.BackColor = Color.FromArgb(37, 36, 81);
@@ -77,7 +89,7 @@ namespace CuttingMachineGUI
                 LeftBorderBtn.Location = new Point(0, CurrentBtn.Location.Y + panelLogo.Size.Height + 6);
                 LeftBorderBtn.Visible = true;
                 LeftBorderBtn.BringToFront();
-                
+
             }
         }
 
@@ -114,6 +126,10 @@ namespace CuttingMachineGUI
             CurrentPanelLbl.Text = childForm.Text;
         }
 
+
+
+
+        #region EventMethods
         private void HomeBtn_Click(object sender, EventArgs e)
         {
             HighligthBtn(sender, RGBColors.color6);
@@ -138,20 +154,6 @@ namespace CuttingMachineGUI
             OpenChildForm(new Forms.ModelSelection());
         }
 
-        //Drag Form
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-
-        private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
-        }
-
-
-
         private void CloseWindowBtn_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -171,6 +173,14 @@ namespace CuttingMachineGUI
             WindowState = FormWindowState.Minimized;
         }
 
+        private void MainPanelBtn_Click(object sender, EventArgs e)
+        {
+            LeftBorderBtn.Visible = false;
+            UnHighligthCurrentBtn();
+            CurrentChildForm.Close();
+            CurrentPanelLbl.Text = "Panel Principal";
+        }
+
         private void UserBtn_Click(object sender, EventArgs e)
         {
             if (UserPanel.Height == 51) {
@@ -186,45 +196,46 @@ namespace CuttingMachineGUI
             }
         }
 
-        private void iconButton1_Click(object sender, EventArgs e)
-        {
-            LeftBorderBtn.Visible = false;
-            UnHighligthCurrentBtn();
-            CurrentChildForm.Close();
-            CurrentPanelLbl.Text = "Panel Principal";
-        }
-
         private void DesignLoaderBtn_Click(object sender, EventArgs e)
         {
             HighligthBtn(sender, RGBColors.color6);
             OpenChildForm(new Forms.DesignLoader());
-
         }
 
         private void DesignMakerBtn_Click(object sender, EventArgs e)
         {
             HighligthBtn(sender, RGBColors.color6);
             OpenChildForm(new Forms.DesignMaker());
-
         }
 
         private void SettingsBtn_Click(object sender, EventArgs e)
         {
             HighligthBtn(sender, RGBColors.color6);
             OpenChildForm(new Forms.Settings());
-
         }
 
         private void CurrentPanelLbl_MouseDown(object sender, MouseEventArgs e)
         {
             panelTitleBar_MouseDown(sender, e);
-
         }
 
-        private void panel3_MouseDown(object sender, MouseEventArgs e)
+
+        private void windowBtnsPanel_MouseDown(object sender, MouseEventArgs e)
         {
             panelTitleBar_MouseDown(sender, e);
-
         }
+        #endregion
+
+        private void MainPanel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.C)
+            {
+
+                MessageBox.Show("asdadasd");
+
+            }
+        }
+
+
     }
 }
