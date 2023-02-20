@@ -45,6 +45,9 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -117,6 +120,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="BusinessLogic\Models\Canvas.cs" />
+    <Compile Include="BusinessLogic\Services\CommunicationService.cs" />
     <Compile Include="Forms\Components\MyPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -255,7 +259,6 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BusinessLogic\Services\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
