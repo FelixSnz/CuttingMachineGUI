@@ -210,7 +210,6 @@ namespace CuttingMachineGUI.BusinessLogic.Models
             {
                 Rectangle lastCutRect = Rects.Last();
 
-                //if (lastCutRect.Right + newWidth + DistanceBetweenCuts <= FabricPanel.ClientSize.Width)
                 if (lastCutRect.Right + newWidth + distanceBetweenCuts <= SurfaceHeight)
                 {
                     // There is enough space to add the new cut to the right of the last cut
@@ -220,7 +219,6 @@ namespace CuttingMachineGUI.BusinessLogic.Models
 
                 }
                 else if (lastCutRect.Bottom + newHeight + distanceBetweenCuts <= FabricHeight)
-                //else if (lastCutRect.Bottom + newHeight + DistanceBetweenCuts <= FabricPanel.ClientSize.Height)
                 {
                     // There is not enough space to add the new cut to the right of the last cut, so add it below the last cut
                     x = cutsMargin;
@@ -243,8 +241,10 @@ namespace CuttingMachineGUI.BusinessLogic.Models
 
         public void Clear()
         {
+            updateUndoStack();
             Rects.Clear();
             Graphics.Clear(Color.FromArgb(10, 0, 30));
+            Redraw(Graphics);
             UpdateGraphics();
         }
 
@@ -281,16 +281,11 @@ namespace CuttingMachineGUI.BusinessLogic.Models
                     _undoStack.Push(Rects.ToList());
                     Console.WriteLine("updating");
                 }
-                else
-                {
-                    Console.WriteLine("its equal");
-                }
             }
             else
             {
                 _undoStack.Push(Rects.ToList());
                 Console.WriteLine("updating");
-
             }
         }
 

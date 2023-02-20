@@ -32,6 +32,8 @@ namespace CuttingMachineGUI.Forms
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.RedoBtn = new FontAwesome.Sharp.IconButton();
+            this.UndoBtn = new FontAwesome.Sharp.IconButton();
             this.JsonFileNameLbl = new System.Windows.Forms.Label();
             this.ClearBtn = new FontAwesome.Sharp.IconButton();
             this.SortBtn = new FontAwesome.Sharp.IconButton();
@@ -45,9 +47,8 @@ namespace CuttingMachineGUI.Forms
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.relocateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FabricPanel = new CuttingMachineGUI.Components.MyPanel();
-            this.UndoBtn = new FontAwesome.Sharp.IconButton();
-            this.RedoBtn = new FontAwesome.Sharp.IconButton();
             this.panel1.SuspendLayout();
             this.BgPanel.SuspendLayout();
             this.figureMenuStrip.SuspendLayout();
@@ -71,6 +72,46 @@ namespace CuttingMachineGUI.Forms
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1131, 80);
             this.panel1.TabIndex = 0;
+            // 
+            // RedoBtn
+            // 
+            this.RedoBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RedoBtn.FlatAppearance.BorderSize = 0;
+            this.RedoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RedoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RedoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.RedoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateRight;
+            this.RedoBtn.IconColor = System.Drawing.Color.White;
+            this.RedoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.RedoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RedoBtn.Location = new System.Drawing.Point(289, 0);
+            this.RedoBtn.Name = "RedoBtn";
+            this.RedoBtn.Size = new System.Drawing.Size(58, 80);
+            this.RedoBtn.TabIndex = 24;
+            this.RedoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RedoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.RedoBtn.UseVisualStyleBackColor = true;
+            this.RedoBtn.Click += new System.EventHandler(this.RedoBtn_Click);
+            // 
+            // UndoBtn
+            // 
+            this.UndoBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.UndoBtn.FlatAppearance.BorderSize = 0;
+            this.UndoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UndoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UndoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.UndoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateBack;
+            this.UndoBtn.IconColor = System.Drawing.Color.White;
+            this.UndoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.UndoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoBtn.Location = new System.Drawing.Point(231, 0);
+            this.UndoBtn.Name = "UndoBtn";
+            this.UndoBtn.Size = new System.Drawing.Size(58, 80);
+            this.UndoBtn.TabIndex = 23;
+            this.UndoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UndoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.UndoBtn.UseVisualStyleBackColor = true;
+            this.UndoBtn.Click += new System.EventHandler(this.UndoBtn_Click);
             // 
             // JsonFileNameLbl
             // 
@@ -235,9 +276,10 @@ namespace CuttingMachineGUI.Forms
             this.figureMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rotateToolStripMenuItem,
             this.resizeToolStripMenuItem,
+            this.relocateToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.figureMenuStrip.Name = "figureMenuStrip";
-            this.figureMenuStrip.Size = new System.Drawing.Size(174, 76);
+            this.figureMenuStrip.Size = new System.Drawing.Size(174, 100);
             // 
             // rotateToolStripMenuItem
             // 
@@ -260,6 +302,12 @@ namespace CuttingMachineGUI.Forms
             this.deleteToolStripMenuItem.Text = "eliminar";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // relocateToolStripMenuItem
+            // 
+            this.relocateToolStripMenuItem.Name = "relocateToolStripMenuItem";
+            this.relocateToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.relocateToolStripMenuItem.Text = "reubicar";
+            // 
             // FabricPanel
             // 
             this.FabricPanel.Location = new System.Drawing.Point(3, 3);
@@ -272,46 +320,6 @@ namespace CuttingMachineGUI.Forms
             this.FabricPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseMove);
             this.FabricPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseUp);
             // 
-            // UndoBtn
-            // 
-            this.UndoBtn.Dock = System.Windows.Forms.DockStyle.Left;
-            this.UndoBtn.FlatAppearance.BorderSize = 0;
-            this.UndoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UndoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UndoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.UndoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateBack;
-            this.UndoBtn.IconColor = System.Drawing.Color.White;
-            this.UndoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.UndoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UndoBtn.Location = new System.Drawing.Point(231, 0);
-            this.UndoBtn.Name = "UndoBtn";
-            this.UndoBtn.Size = new System.Drawing.Size(58, 80);
-            this.UndoBtn.TabIndex = 23;
-            this.UndoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.UndoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.UndoBtn.UseVisualStyleBackColor = true;
-            this.UndoBtn.Click += new System.EventHandler(this.UndoBtn_Click);
-            // 
-            // RedoBtn
-            // 
-            this.RedoBtn.Dock = System.Windows.Forms.DockStyle.Left;
-            this.RedoBtn.FlatAppearance.BorderSize = 0;
-            this.RedoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RedoBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RedoBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.RedoBtn.IconChar = FontAwesome.Sharp.IconChar.RotateRight;
-            this.RedoBtn.IconColor = System.Drawing.Color.White;
-            this.RedoBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.RedoBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RedoBtn.Location = new System.Drawing.Point(289, 0);
-            this.RedoBtn.Name = "RedoBtn";
-            this.RedoBtn.Size = new System.Drawing.Size(58, 80);
-            this.RedoBtn.TabIndex = 24;
-            this.RedoBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RedoBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.RedoBtn.UseVisualStyleBackColor = true;
-            this.RedoBtn.Click += new System.EventHandler(this.RedoBtn_Click);
-            // 
             // DesignMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -322,6 +330,7 @@ namespace CuttingMachineGUI.Forms
             this.Controls.Add(this.panel1);
             this.Name = "DesignMaker";
             this.Text = "Panel de Diseñador";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DesignMaker_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.BgPanel.ResumeLayout(false);
@@ -349,5 +358,6 @@ namespace CuttingMachineGUI.Forms
         private Components.MyPanel FabricPanel;
         private FontAwesome.Sharp.IconButton RedoBtn;
         private FontAwesome.Sharp.IconButton UndoBtn;
+        private System.Windows.Forms.ToolStripMenuItem relocateToolStripMenuItem;
     }
 }

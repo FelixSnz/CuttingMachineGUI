@@ -22,6 +22,8 @@ namespace CuttingMachineGUI.Forms
     {
 
         private Canvas myCanvas;
+        private bool unsavedChanges;
+        private List<Rectangle> savedRects;
 
         public DesignMaker()
         {
@@ -31,7 +33,9 @@ namespace CuttingMachineGUI.Forms
             myCanvas = new Canvas(FabricPanel);
             FabricPanel.Location = new Point(0, 0);
             BgPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.SurfaceHeight);
-            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.FabricHeight)
+            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.FabricHeight);
+            unsavedChanges= false;
+            UpdateFileNameLabel();
         }
 
         private void InitializeTooltips()
@@ -93,7 +97,10 @@ namespace CuttingMachineGUI.Forms
                         promptSizeWindow.Width,
                         promptSizeWindow.Height
                         );
-                    
+                    unsavedChanges= true;
+                    UpdateFileNameLabel();
+
+
                 }
                 catch (Exception ex) {
 
@@ -105,7 +112,7 @@ namespace CuttingMachineGUI.Forms
         private void MatrixCutBtn_Click(object sender, EventArgs e)
         {
             Popups.PromptSize promptSizeWindow = new Popups.PromptSize(
-                "Agregar corte",
+                "Agregar cortes",
                 myCanvas.Units,
                 true
                 );
@@ -123,6 +130,8 @@ namespace CuttingMachineGUI.Forms
                         promptSizeWindow.HorizontalCopies,
                         promptSizeWindow.VerticalCopies
                         );
+                    unsavedChanges = true;
+                    UpdateFileNameLabel();
                 }
                 catch (Exception ex)
                 {
@@ -155,6 +164,9 @@ namespace CuttingMachineGUI.Forms
 
             // Redraw all the figures
             myCanvas.Redraw(e.Graphics);
+
+
+
         }
 
         private void FabricPanel_MouseDown(object sender, MouseEventArgs e)
@@ -177,12 +189,15 @@ namespace CuttingMachineGUI.Forms
 
             //redraws the panel
             FabricPanel.Invalidate();
+
         }
 
         private void FabricPanel_MouseUp(object sender, MouseEventArgs e)
         {
             myCanvas.lastSelectedRect = myCanvas.selectedRect;
             myCanvas.selectedRect = Rectangle.Empty;
+            unsavedChanges = true;
+            UpdateFileNameLabel();
 
         }
 
@@ -207,7 +222,21 @@ namespace CuttingMachineGUI.Forms
             myCanvas.updateUndoStack();
             EraseDrawnRect(myCanvas.lastSelectedRect);
             myCanvas.Rects.Remove(myCanvas.lastSelectedRect);
-            
+            unsavedChanges = true;
+
+            if (savedRects == null)
+            {
+                if (myCanvas.Rects.Count == 0)
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            UpdateFileNameLabel();
+
         }
 
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,7 +261,9 @@ namespace CuttingMachineGUI.Forms
                     promtSizeWindow.Width,
                     promtSizeWindow.Height    
                     );
-                
+
+                unsavedChanges = true;
+                UpdateFileNameLabel();
                 FabricPanel.Invalidate();
             }
         }
@@ -251,16 +282,18 @@ namespace CuttingMachineGUI.Forms
 
             int index = myCanvas.Rects.IndexOf(myCanvas.lastSelectedRect);
             myCanvas.Rects[index] = rotatedRect;
+            unsavedChanges = true;
+            UpdateFileNameLabel();
             FabricPanel.Invalidate();
         }
 
-        private void SaveDesignBtn_Click(object sender, EventArgs e)
+        private void SaveDesign(bool keep)
         {
             // Prompt the user to select a file location to save the JSON file
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "JSON files (*.json)|*.json";
             saveFileDialog.Title = "Save rectangles as JSON file";
-            saveFileDialog.FileName = JsonFileNameLbl.Text;
+            saveFileDialog.FileName = "*.json";
             DialogResult result = saveFileDialog.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -272,13 +305,43 @@ namespace CuttingMachineGUI.Forms
 
                 // Write the JSON string to the specified file path
                 File.WriteAllText(filePath, jsonString);
-                JsonFileNameLbl.Text = filePath.Split('\\').Last();
+                unsavedChanges = false;
+                UpdateFileNameLabel();
+                if (keep)
+                {
+                    JsonFileNameLbl.Text = filePath.Split('\\').Last();
+                    savedRects = new List<Rectangle>(myCanvas.Rects);
+                    
+
+                }
+                
+
             }
+        }
+
+
+        private void SaveDesignBtn_Click(object sender, EventArgs e)
+        {
+            SaveDesign(true);
+
         }
 
         private void LoadFileBtn_Click(object sender, EventArgs e)
         {
-            
+
+            if (unsavedChanges)
+            {
+                DialogResult askResult = MessageBox.Show(
+                    "Desea guardar los cambios antes de cargar un nuevo archivo?",
+                    "Cambios sin guardar",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (askResult == DialogResult.Yes)
+                {
+                    SaveDesign(false); // Call your Save function.
+                }
+
+            }
+
             // Prompt the user to select a file
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON files (*.json)|*.json";
@@ -287,7 +350,7 @@ namespace CuttingMachineGUI.Forms
 
             if (result == DialogResult.OK)
             {
-                myCanvas.updateUndoStack();
+
                 myCanvas.Clear();
                 string filePath = openFileDialog.FileName;
 
@@ -296,6 +359,11 @@ namespace CuttingMachineGUI.Forms
 
                 // Display the rects in canvas
                 myCanvas.Rects = JsonSerializer.Deserialize<List<Rectangle>>(fileContents);
+                if (myCanvas.Rects.Count > 0)
+                {
+                    savedRects = new List<Rectangle>(myCanvas.Rects);
+                }
+
                 FabricPanel.Invalidate();
                 JsonFileNameLbl.Text = filePath.Split('\\').Last();
                 
@@ -314,41 +382,136 @@ namespace CuttingMachineGUI.Forms
                 );
         }
 
+
+
         private void ClearBtn_Click(object sender, EventArgs e)
         {
 
-            DialogResult result = MessageBox.Show(
-                "No se han guardado las ultimas modificaciones, seguro que quiere continuar?",
-                "Borrar diseño actual",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                );
-
-            if (result == DialogResult.Yes)
+            if (unsavedChanges)
             {
-                myCanvas.updateUndoStack();
-                myCanvas.Clear();
+                DialogResult askResult = MessageBox.Show(
+                    "Desea guardar los cambios antes de borrar el diseño actual?",
+                    "Cambios sin guardar",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (askResult == DialogResult.Yes)
+                {
+                    SaveDesign(false); // Call your Save function.
 
-                ControlPaint.DrawBorder(
-                    myCanvas.Graphics,
-                    this.FabricPanel.ClientRectangle, 
-                    Color.LightBlue, 
-                    ButtonBorderStyle.Solid
-                    );
+                }
 
-                
+
             }
+            myCanvas.Clear();
+            if (savedRects == null)
+            {
+                if (myCanvas.Rects.Count == 0)
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            
+            UpdateFileNameLabel();
         }
 
         private void UndoBtn_Click(object sender, EventArgs e)
         {
             myCanvas.undo();
             FabricPanel.Invalidate();
+
+            if (savedRects != null) 
+            {
+
+                if (myCanvas.Rects.SequenceEqual(savedRects))
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            else
+            {
+                if (myCanvas.Rects.Count == 0)
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            UpdateFileNameLabel();
         }
 
         private void RedoBtn_Click(object sender, EventArgs e)
         {
             myCanvas.redo();
             FabricPanel.Invalidate();
+
+            if (savedRects != null)
+            {
+                if (myCanvas.Rects.SequenceEqual(savedRects))
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            else
+            {
+                if (myCanvas.Rects.Count == 0)
+                {
+                    unsavedChanges = false;
+                }
+                else
+                {
+                    unsavedChanges = true;
+                }
+            }
+            UpdateFileNameLabel();
+
+        }
+
+        void UpdateFileNameLabel()
+        {
+            string fileName = JsonFileNameLbl.Text;
+            if (unsavedChanges)
+            {
+                if (!fileName.EndsWith("*"))
+                    JsonFileNameLbl.Text = fileName + "*";
+            }
+            else
+            {
+                if (fileName.EndsWith("*"))
+                    fileName = fileName.Substring(0, fileName.Length - 1);
+                JsonFileNameLbl.Text = fileName;
+
+            }
+        }
+
+        private void DesignMaker_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (unsavedChanges)
+            {
+                var result = MessageBox.Show("Desea guardar los cambios antes de salir del editor?",
+                    "Cambios sin guardar",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    SaveDesign(false); // Call your Save function.
+                }
+                else if (result == DialogResult.No)
+                {
+                    return; // User cancelled the load operation.
+                }
+            }
         }
     }
 }
