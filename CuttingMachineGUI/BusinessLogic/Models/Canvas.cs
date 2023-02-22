@@ -15,7 +15,7 @@ using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace CuttingMachineGUI.BusinessLogic.Models
 {
-    internal class Canvas
+    public class Canvas
     {
 
         #region Variables
@@ -25,7 +25,7 @@ namespace CuttingMachineGUI.BusinessLogic.Models
         public Point _offset;
         public int _surfaceWidth;
         public int _surfaceHeight;
-        public int _fabricHeight;
+        public int _clothHeight;
         public string _units;
         public List<Rectangle> _rects;
 
@@ -33,8 +33,8 @@ namespace CuttingMachineGUI.BusinessLogic.Models
         private Stack<List<Rectangle>> _redoStack = new Stack<List<Rectangle>>();
 
 
-        private int distanceBetweenCuts;
-        private int cutsMargin;
+        public int distanceBetweenCuts;
+        public int cutsMargin;
         private MyPanel myPanel;
 
         #endregion
@@ -116,15 +116,15 @@ namespace CuttingMachineGUI.BusinessLogic.Models
             }
         }
 
-        public int FabricHeight
+        public int ClothHeight
         {
             get
             {
-                return _fabricHeight;
+                return _clothHeight;
             }
             set
             {
-                _fabricHeight = value;
+                _clothHeight = value;
             }
         }
 
@@ -166,12 +166,18 @@ namespace CuttingMachineGUI.BusinessLogic.Models
 
         private void InitializeFields()
         {
+            UpdateSettings();
+        }
+
+        public void UpdateSettings()
+        {
             SurfaceWidth = Convert.ToInt32(ConfigurationManager.AppSettings["SurfaceWidth"]);
             SurfaceHeight = Convert.ToInt32(ConfigurationManager.AppSettings["SurfaceHeight"]);
-            FabricHeight = Convert.ToInt32(ConfigurationManager.AppSettings["FabricHeight"]);
+            ClothHeight = Convert.ToInt32(ConfigurationManager.AppSettings["ClothHeight"]);
             distanceBetweenCuts = Convert.ToInt32(ConfigurationManager.AppSettings["DistanceBetweenCuts"]);
             cutsMargin = Convert.ToInt32(ConfigurationManager.AppSettings["CutsMargin"]);
             Units = ConfigurationManager.AppSettings["Units"];
+
         }
 
         public void UpdateGraphics()
@@ -218,7 +224,7 @@ namespace CuttingMachineGUI.BusinessLogic.Models
 
 
                 }
-                else if (lastCutRect.Bottom + newHeight + distanceBetweenCuts <= FabricHeight)
+                else if (lastCutRect.Bottom + newHeight + distanceBetweenCuts <= ClothHeight)
                 {
                     // There is not enough space to add the new cut to the right of the last cut, so add it below the last cut
                     x = cutsMargin;

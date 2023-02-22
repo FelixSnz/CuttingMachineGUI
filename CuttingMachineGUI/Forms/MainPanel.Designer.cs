@@ -510,7 +510,7 @@ namespace CuttingMachineGUI
             this.Text = "Form1";
             this.TransparencyKey = System.Drawing.Color.Yellow;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainPanel_KeyDown);
-
+            
             this.panelMenu.ResumeLayout(false);
             this.MenuOptionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

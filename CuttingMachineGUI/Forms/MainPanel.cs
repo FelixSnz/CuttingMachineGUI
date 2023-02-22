@@ -228,12 +228,12 @@ namespace CuttingMachineGUI
 
         private void MainPanel_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.C)
-            {
+            //if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z)
+            //{
 
-                MessageBox.Show("asdadasd");
+            //    MessageBox.Show("asdadasd");
 
-            }
+            //}
         }
 
 

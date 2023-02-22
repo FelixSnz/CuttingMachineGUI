@@ -43,12 +43,12 @@ namespace CuttingMachineGUI.Forms
             this.MatrixCutBtn = new FontAwesome.Sharp.IconButton();
             this.SingleCutBtn = new FontAwesome.Sharp.IconButton();
             this.BgPanel = new System.Windows.Forms.Panel();
+            this.FabricPanel = new CuttingMachineGUI.Components.MyPanel();
             this.figureMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relocateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FabricPanel = new CuttingMachineGUI.Components.MyPanel();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.BgPanel.SuspendLayout();
             this.figureMenuStrip.SuspendLayout();
@@ -219,6 +219,7 @@ namespace CuttingMachineGUI.Forms
             this.DesignSettingsBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.DesignSettingsBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.DesignSettingsBtn.UseVisualStyleBackColor = true;
+            this.DesignSettingsBtn.Click += new System.EventHandler(this.DesignSettingsBtn_Click);
             // 
             // MatrixCutBtn
             // 
@@ -270,6 +271,18 @@ namespace CuttingMachineGUI.Forms
             this.BgPanel.TabIndex = 1;
             this.BgPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.BgPanel_Paint);
             // 
+            // FabricPanel
+            // 
+            this.FabricPanel.Location = new System.Drawing.Point(3, 3);
+            this.FabricPanel.Name = "FabricPanel";
+            this.FabricPanel.Size = new System.Drawing.Size(200, 100);
+            this.FabricPanel.TabIndex = 0;
+            this.FabricPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.FabricPanel_Paint);
+            this.FabricPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseClick);
+            this.FabricPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseDown);
+            this.FabricPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseMove);
+            this.FabricPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseUp);
+            // 
             // figureMenuStrip
             // 
             this.figureMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -295,30 +308,18 @@ namespace CuttingMachineGUI.Forms
             this.resizeToolStripMenuItem.Text = "redimensionar";
             this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
             // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
-            this.deleteToolStripMenuItem.Text = "eliminar";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
             // relocateToolStripMenuItem
             // 
             this.relocateToolStripMenuItem.Name = "relocateToolStripMenuItem";
             this.relocateToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.relocateToolStripMenuItem.Text = "reubicar";
             // 
-            // FabricPanel
+            // deleteToolStripMenuItem
             // 
-            this.FabricPanel.Location = new System.Drawing.Point(3, 3);
-            this.FabricPanel.Name = "FabricPanel";
-            this.FabricPanel.Size = new System.Drawing.Size(200, 100);
-            this.FabricPanel.TabIndex = 0;
-            this.FabricPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.FabricPanel_Paint);
-            this.FabricPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseClick);
-            this.FabricPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseDown);
-            this.FabricPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseMove);
-            this.FabricPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FabricPanel_MouseUp);
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
+            this.deleteToolStripMenuItem.Text = "eliminar";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // DesignMaker
             // 
@@ -331,6 +332,8 @@ namespace CuttingMachineGUI.Forms
             this.Name = "DesignMaker";
             this.Text = "Panel de Diseñador";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DesignMaker_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DesignMaker_KeyDown);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.DesignerPanel_PreviewKeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.BgPanel.ResumeLayout(false);

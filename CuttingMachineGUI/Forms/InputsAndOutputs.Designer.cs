@@ -49,6 +49,7 @@
             this.Controls.Add(this.label1);
             this.Name = "InputsAndOutputs";
             this.Text = "Entradas y Salidas";
+            this.Load += new System.EventHandler(this.InputsAndOutputs_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

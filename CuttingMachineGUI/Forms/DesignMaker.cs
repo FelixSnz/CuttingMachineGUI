@@ -29,11 +29,14 @@ namespace CuttingMachineGUI.Forms
         {
             InitializeComponent();
             InitializeTooltips();
+            this.TabIndex = 1;
+            this.Focus();   
+            //this.KeyPreview = true;
 
             myCanvas = new Canvas(FabricPanel);
             FabricPanel.Location = new Point(0, 0);
             BgPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.SurfaceHeight);
-            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.FabricHeight);
+            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.ClothHeight);
             unsavedChanges= false;
             UpdateFileNameLabel();
         }
@@ -509,9 +512,43 @@ namespace CuttingMachineGUI.Forms
                 }
                 else if (result == DialogResult.No)
                 {
-                    return; // User cancelled the load operation.
+                    return; // User cancelled the load operati-on.
                 }
             }
+        }
+
+        private void DesignMaker_KeyDown(object sender, KeyEventArgs e)
+        {
+            MessageBox.Show("someting pressed");
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+
+                MessageBox.Show("eere");
+            }
+        }
+
+
+        private void DesignerPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            MessageBox.Show("asdad");
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                // Perform save action here
+                e.IsInputKey = true; // Mark the event as handled so that it doesn't propagate to the parent form
+            }
+        }
+
+        private void DesignSettingsBtn_Click(object sender, EventArgs e)
+        {
+            Popups.CanvasSettings canvasSettingsWindow = new Popups.CanvasSettings(myCanvas);
+
+            canvasSettingsWindow.StartPosition = FormStartPosition.CenterScreen;
+
+            if (canvasSettingsWindow.ShowDialog() == DialogResult.OK)
+            {
+               
+            }
+
         }
     }
 }
