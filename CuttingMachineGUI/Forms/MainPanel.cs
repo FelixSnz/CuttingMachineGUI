@@ -177,7 +177,10 @@ namespace CuttingMachineGUI
         {
             LeftBorderBtn.Visible = false;
             UnHighligthCurrentBtn();
-            CurrentChildForm.Close();
+
+            if (CurrentChildForm != null)
+                CurrentChildForm.Close();
+
             CurrentPanelLbl.Text = "Panel Principal";
         }
 
