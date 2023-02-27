@@ -35,8 +35,8 @@ namespace CuttingMachineGUI.Forms
 
             myCanvas = new Canvas(FabricPanel);
             FabricPanel.Location = new Point(0, 0);
-            BgPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.SurfaceHeight);
-            FabricPanel.Size = new Size(myCanvas.SurfaceWidth, myCanvas.ClothHeight);
+            BgPanel.Size = new Size(myCanvas.SurfaceWidthPixels, myCanvas.SurfaceHeightPixels);
+            FabricPanel.Size = new Size(myCanvas.SurfaceWidthPixels, myCanvas.ClothHeightPixels);
             unsavedChanges= false;
             UpdateFileNameLabel();
         }
@@ -79,6 +79,8 @@ namespace CuttingMachineGUI.Forms
             public static Color grayblue = Color.FromArgb(57, 96, 142);
             public static Color blackblue = Color.FromArgb(10, 0, 30);
             public static Color erasecolor = Color.FromArgb(10, 0, 30);
+            public static Color invalidPosition = Color.FromArgb(251, 94, 94);
+
         }
 
         private void SingleCutBtn_Click(object sender, EventArgs e)
@@ -97,8 +99,8 @@ namespace CuttingMachineGUI.Forms
                 {
                     myCanvas.updateUndoStack();
                     myCanvas.AddRect(
-                        promptSizeWindow.Width,
-                        promptSizeWindow.Height
+                        promptSizeWindow.width,
+                        promptSizeWindow.height
                         );
                     unsavedChanges= true;
                     UpdateFileNameLabel();
@@ -128,8 +130,8 @@ namespace CuttingMachineGUI.Forms
                 {
                     myCanvas.updateUndoStack();
                     myCanvas.AddMultipleRects(
-                        promptSizeWindow.Width,
-                        promptSizeWindow.Height,
+                        promptSizeWindow.width,
+                        promptSizeWindow.height,
                         promptSizeWindow.HorizontalCopies,
                         promptSizeWindow.VerticalCopies
                         );
@@ -178,13 +180,18 @@ namespace CuttingMachineGUI.Forms
             {
                 if (Rect.Contains(e.Location))
                 {
+
                     myCanvas.selectedRect = Rect;
+                    myCanvas.UpdateLastRect();
+                    myCanvas.lastSelectedRect = myCanvas.selectedRect;
                     myCanvas.offset = new Point(e.Location.X - Rect.X, e.Location.Y - Rect.Y);
                     myCanvas.updateUndoStack();
                     break;
                 }
             }
         }
+
+
 
         private void FabricPanel_MouseMove(object sender, MouseEventArgs e)
         {
@@ -197,6 +204,13 @@ namespace CuttingMachineGUI.Forms
 
         private void FabricPanel_MouseUp(object sender, MouseEventArgs e)
         {
+
+
+
+
+
+
+            myCanvas.SafeRectRelease();
             myCanvas.lastSelectedRect = myCanvas.selectedRect;
             myCanvas.selectedRect = Rectangle.Empty;
             unsavedChanges = true;
