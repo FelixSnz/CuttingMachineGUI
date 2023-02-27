@@ -35,14 +35,14 @@
             this.SurfaceHeightTxtBox = new System.Windows.Forms.TextBox();
             this.ClothHeightTxtBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.iconButton1 = new FontAwesome.Sharp.IconButton();
-            this.SaveDesignBtn = new FontAwesome.Sharp.IconButton();
+            this.SaveDesign = new FontAwesome.Sharp.IconButton();
+            this.CancelBtn = new FontAwesome.Sharp.IconButton();
             this.InchesCheckBox = new System.Windows.Forms.CheckBox();
             this.MillimetersCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.WindowTitleLbl = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.iconButton2 = new FontAwesome.Sharp.IconButton();
+            this.CloseBtn = new FontAwesome.Sharp.IconButton();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -68,42 +68,52 @@
             // MarginTxtBox
             // 
             this.MarginTxtBox.Location = new System.Drawing.Point(135, 8);
+            this.MarginTxtBox.MaxLength = 8;
             this.MarginTxtBox.Name = "MarginTxtBox";
             this.MarginTxtBox.Size = new System.Drawing.Size(100, 22);
             this.MarginTxtBox.TabIndex = 6;
+            this.MarginTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // SeparationTxtBox
             // 
             this.SeparationTxtBox.Location = new System.Drawing.Point(185, 141);
+            this.SeparationTxtBox.MaxLength = 8;
             this.SeparationTxtBox.Name = "SeparationTxtBox";
             this.SeparationTxtBox.Size = new System.Drawing.Size(100, 22);
             this.SeparationTxtBox.TabIndex = 5;
+            this.SeparationTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // SurfaceWidthTxtBox
             // 
             this.SurfaceWidthTxtBox.Location = new System.Drawing.Point(240, 388);
+            this.SurfaceWidthTxtBox.MaxLength = 8;
             this.SurfaceWidthTxtBox.Name = "SurfaceWidthTxtBox";
             this.SurfaceWidthTxtBox.Size = new System.Drawing.Size(100, 22);
             this.SurfaceWidthTxtBox.TabIndex = 4;
+            this.SurfaceWidthTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // SurfaceHeightTxtBox
             // 
             this.SurfaceHeightTxtBox.Location = new System.Drawing.Point(494, 238);
+            this.SurfaceHeightTxtBox.MaxLength = 8;
             this.SurfaceHeightTxtBox.Name = "SurfaceHeightTxtBox";
             this.SurfaceHeightTxtBox.Size = new System.Drawing.Size(100, 22);
             this.SurfaceHeightTxtBox.TabIndex = 3;
+            this.SurfaceHeightTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // ClothHeightTxtBox
             // 
             this.ClothHeightTxtBox.Location = new System.Drawing.Point(575, 73);
+            this.ClothHeightTxtBox.MaxLength = 8;
             this.ClothHeightTxtBox.Name = "ClothHeightTxtBox";
             this.ClothHeightTxtBox.Size = new System.Drawing.Size(100, 22);
             this.ClothHeightTxtBox.TabIndex = 2;
+            this.ClothHeightTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.iconButton1);
-            this.panel3.Controls.Add(this.SaveDesignBtn);
+            this.panel3.Controls.Add(this.SaveDesign);
+            this.panel3.Controls.Add(this.CancelBtn);
             this.panel3.Controls.Add(this.InchesCheckBox);
             this.panel3.Controls.Add(this.MillimetersCheckBox);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -113,43 +123,44 @@
             this.panel3.Size = new System.Drawing.Size(793, 83);
             this.panel3.TabIndex = 1;
             // 
-            // iconButton1
+            // SaveDesign
             // 
-            this.iconButton1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.iconButton1.FlatAppearance.BorderSize = 0;
-            this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
-            this.iconButton1.IconColor = System.Drawing.Color.White;
-            this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton1.Location = new System.Drawing.Point(651, 10);
-            this.iconButton1.Name = "iconButton1";
-            this.iconButton1.Size = new System.Drawing.Size(66, 63);
-            this.iconButton1.TabIndex = 20;
-            this.iconButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.iconButton1.UseVisualStyleBackColor = true;
-            this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
+            this.SaveDesign.Dock = System.Windows.Forms.DockStyle.Right;
+            this.SaveDesign.FlatAppearance.BorderSize = 0;
+            this.SaveDesign.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveDesign.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SaveDesign.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.SaveDesign.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
+            this.SaveDesign.IconColor = System.Drawing.Color.White;
+            this.SaveDesign.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.SaveDesign.Location = new System.Drawing.Point(651, 10);
+            this.SaveDesign.Name = "SaveDesign";
+            this.SaveDesign.Size = new System.Drawing.Size(66, 63);
+            this.SaveDesign.TabIndex = 20;
+            this.SaveDesign.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SaveDesign.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SaveDesign.UseVisualStyleBackColor = true;
+            this.SaveDesign.Click += new System.EventHandler(this.SaveDesign_Click);
             // 
-            // SaveDesignBtn
+            // CancelBtn
             // 
-            this.SaveDesignBtn.Dock = System.Windows.Forms.DockStyle.Right;
-            this.SaveDesignBtn.FlatAppearance.BorderSize = 0;
-            this.SaveDesignBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveDesignBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveDesignBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.SaveDesignBtn.IconChar = FontAwesome.Sharp.IconChar.X;
-            this.SaveDesignBtn.IconColor = System.Drawing.Color.White;
-            this.SaveDesignBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.SaveDesignBtn.IconSize = 38;
-            this.SaveDesignBtn.Location = new System.Drawing.Point(717, 10);
-            this.SaveDesignBtn.Name = "SaveDesignBtn";
-            this.SaveDesignBtn.Size = new System.Drawing.Size(66, 63);
-            this.SaveDesignBtn.TabIndex = 19;
-            this.SaveDesignBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SaveDesignBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SaveDesignBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.CancelBtn.FlatAppearance.BorderSize = 0;
+            this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.CancelBtn.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.CancelBtn.IconColor = System.Drawing.Color.White;
+            this.CancelBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.CancelBtn.IconSize = 38;
+            this.CancelBtn.Location = new System.Drawing.Point(717, 10);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(66, 63);
+            this.CancelBtn.TabIndex = 19;
+            this.CancelBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CancelBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // InchesCheckBox
             // 
@@ -204,7 +215,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(25)))), ((int)(((byte)(62)))));
-            this.panel1.Controls.Add(this.iconButton2);
+            this.panel1.Controls.Add(this.CloseBtn);
             this.panel1.Controls.Add(this.WindowTitleLbl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -213,26 +224,26 @@
             this.panel1.TabIndex = 0;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
-            // iconButton2
+            // CloseBtn
             // 
-            this.iconButton2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.iconButton2.FlatAppearance.BorderSize = 0;
-            this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton2.IconChar = FontAwesome.Sharp.IconChar.X;
-            this.iconButton2.IconColor = System.Drawing.Color.White;
-            this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton2.IconSize = 30;
-            this.iconButton2.Location = new System.Drawing.Point(737, 0);
-            this.iconButton2.Name = "iconButton2";
-            this.iconButton2.Rotation = 90D;
-            this.iconButton2.Size = new System.Drawing.Size(66, 37);
-            this.iconButton2.TabIndex = 20;
-            this.iconButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.iconButton2.UseVisualStyleBackColor = true;
-            this.iconButton2.Click += new System.EventHandler(this.iconButton2_Click);
+            this.CloseBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.CloseBtn.FlatAppearance.BorderSize = 0;
+            this.CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseBtn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CloseBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.CloseBtn.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.CloseBtn.IconColor = System.Drawing.Color.White;
+            this.CloseBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.CloseBtn.IconSize = 30;
+            this.CloseBtn.Location = new System.Drawing.Point(737, 0);
+            this.CloseBtn.Name = "CloseBtn";
+            this.CloseBtn.Rotation = 90D;
+            this.CloseBtn.Size = new System.Drawing.Size(66, 37);
+            this.CloseBtn.TabIndex = 20;
+            this.CloseBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CloseBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.CloseBtn.UseVisualStyleBackColor = true;
+            this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // CanvasSettings
             // 
@@ -267,10 +278,10 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.CheckBox InchesCheckBox;
         private System.Windows.Forms.CheckBox MillimetersCheckBox;
-        private FontAwesome.Sharp.IconButton iconButton1;
-        private FontAwesome.Sharp.IconButton SaveDesignBtn;
+        private FontAwesome.Sharp.IconButton SaveDesign;
+        private FontAwesome.Sharp.IconButton CancelBtn;
         private System.Windows.Forms.Label WindowTitleLbl;
         private System.Windows.Forms.Panel panel1;
-        private FontAwesome.Sharp.IconButton iconButton2;
+        private FontAwesome.Sharp.IconButton CloseBtn;
     }
 }
