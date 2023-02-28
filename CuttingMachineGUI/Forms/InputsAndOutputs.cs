@@ -19,7 +19,7 @@ namespace CuttingMachineGUI.Forms
         {
             InitializeComponent();
 
-            plcComm = new PlcCommunicationService("127.0.0.1", 1502);
+            //plcComm = new PlcCommunicationService("127.0.0.1", 1502);
 
 
         }
@@ -27,8 +27,8 @@ namespace CuttingMachineGUI.Forms
         private async void InputsAndOutputs_Load(object sender, EventArgs e)
         {
 
-            ushort holdingRegister1Value = await plcComm.ReadMemory(0);
-            label1.Text = holdingRegister1Value.ToString();
+            //ushort holdingRegister1Value = await plcComm.ReadMemory(0);
+            //label1.Text = holdingRegister1Value.ToString();
 
         }
     }

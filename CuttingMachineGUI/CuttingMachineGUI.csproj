@@ -36,6 +36,9 @@
     <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="EEIP, Version=1.6.0.26419, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EEIP.1.6.0.26419\lib\net452\EEIP.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.Sharp, Version=6.2.1.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.6.2.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
     </Reference>
@@ -121,6 +124,7 @@
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="BusinessLogic\Models\Canvas.cs" />
     <Compile Include="BusinessLogic\Services\CommunicationService.cs" />
+    <Compile Include="BusinessLogic\Services\EEIPService.cs" />
     <Compile Include="Forms\Components\MyPanel.cs">
       <SubType>Component</SubType>
     </Compile>
