@@ -175,11 +175,12 @@
             // 
             this.HeightTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HeightTxtBox.Location = new System.Drawing.Point(68, 23);
+            this.HeightTxtBox.MaxLength = 8;
             this.HeightTxtBox.Name = "HeightTxtBox";
             this.HeightTxtBox.Size = new System.Drawing.Size(86, 34);
             this.HeightTxtBox.TabIndex = 1;
-            this.HeightTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HeightTxtBox_KeyDown);
-            this.HeightTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HeightTxtBox_KeyPress);
+            this.HeightTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterTrigger);
+            this.HeightTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // iconPictureBox1
             // 
@@ -252,11 +253,12 @@
             // 
             this.WidthTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WidthTxtBox.Location = new System.Drawing.Point(68, 23);
+            this.WidthTxtBox.MaxLength = 8;
             this.WidthTxtBox.Name = "WidthTxtBox";
             this.WidthTxtBox.Size = new System.Drawing.Size(86, 34);
             this.WidthTxtBox.TabIndex = 1;
-            this.WidthTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WidthTxtBox_KeyDown);
-            this.WidthTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WidthTxtBox_KeyPress);
+            this.WidthTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnterTrigger);
+            this.WidthTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DoubleFilter);
             // 
             // iconPictureBox2
             // 

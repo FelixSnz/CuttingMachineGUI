@@ -13,8 +13,8 @@ namespace CuttingMachineGUI.Popups
 {
     public partial class PromptSize : Form
     {
-        public int Height;
-        public int Width;
+        public double height;
+        public double width;
         public int VerticalCopies;
         public int HorizontalCopies;
         public PromptSize(string Title, string units, bool multiple)
@@ -52,8 +52,8 @@ namespace CuttingMachineGUI.Popups
 
         private void OkBtn_Click(object sender, EventArgs e)
         {
-            Height = Convert.ToInt32(HeightTxtBox.Text);
-            Width = Convert.ToInt32(WidthTxtBox.Text);
+            height = Convert.ToDouble(HeightTxtBox.Text);
+            width = Convert.ToDouble(WidthTxtBox.Text);
             VerticalCopies = Convert.ToInt32(VerticalCopiesCmbBox.Text);
             HorizontalCopies = Convert.ToInt32(HorizontalCopiesCmbBox.Text);
 
@@ -77,7 +77,8 @@ namespace CuttingMachineGUI.Popups
         {
             this.titlePanel_MouseDown(sender, e);
         }
-        private void WidthTxtBox_KeyDown(object sender, KeyEventArgs e)
+
+        private void EnterTrigger(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -88,28 +89,16 @@ namespace CuttingMachineGUI.Popups
             }
         }
 
-        private void HeightTxtBox_KeyDown(object sender, KeyEventArgs e)
+        private void DoubleFilter(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (WidthTxtBox.Text != "" && HeightTxtBox.Text != "")
-                {
-                    OkBtn_Click(sender, e);
-                }
-            }
-        }
-
-        private void WidthTxtBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
-        }
 
-        private void HeightTxtBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
